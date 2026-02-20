@@ -19,13 +19,14 @@
       --gold-mid:  #b48c50;
       --gold-lt:   #d4b07a;
       --gold-faint:#e8d9c0;
+      --gold-ghost: rgba(154,117,64,0.06);
       --ink:       #1a1612;
       --ink-2:     #3d3529;
       --ink-3:     #6b5e4a;
       --ink-4:     #9a8c78;
       --border:    rgba(26,22,18,0.09);
       --border-2:  rgba(26,22,18,0.15);
-      --shadow-sm: 0 2px 8px rgba(26,22,18,0.06), 0 1px 2px rgba(26,22,18,0.04);
+      --shadow-sm: 0 2px 8px rgba(26,22,18,0.06);
       --shadow-md: 0 8px 32px rgba(26,22,18,0.10), 0 2px 8px rgba(26,22,18,0.06);
       --shadow-lg: 0 24px 64px rgba(26,22,18,0.14), 0 8px 24px rgba(26,22,18,0.08);
       --serif:     'Cormorant Garamond', Georgia, serif;
@@ -42,638 +43,273 @@
       overflow-x: hidden;
     }
 
-    /* ── Reveal animations ── */
+    /* ── Reveal ── */
     .r {
       opacity: 0;
       transform: translateY(28px);
       transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
     }
-    .r.up { opacity: 0; transform: translateY(28px); }
     .r.visible { opacity: 1; transform: translateY(0); }
-    .d1 { transition-delay: 0.08s; }
-    .d2 { transition-delay: 0.16s; }
-    .d3 { transition-delay: 0.24s; }
-    .d4 { transition-delay: 0.32s; }
-    .d5 { transition-delay: 0.40s; }
-    .d6 { transition-delay: 0.48s; }
+    .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s}
+    .d4{transition-delay:.32s} .d5{transition-delay:.40s} .d6{transition-delay:.48s}
 
     /* ── Layout ── */
-    .page { max-width: 1160px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 5rem); }
+    .page { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,4rem); }
 
     /* ── Nav ── */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: rgba(250,249,247,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      padding: 0 clamp(1.5rem, 5vw, 5rem);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
+      padding: 0 clamp(1.25rem,4vw,4rem);
+      display: flex; align-items: center; justify-content: space-between; height: 58px;
     }
-    .nav-brand {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-    }
+    .nav-brand { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
     .nav-brand em { color: var(--gold); font-style: italic; }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--gold); }
-    @media(max-width: 560px) { .nav-links { display: none; } }
+    @media(max-width:560px){ .nav-links{ display:none; } }
 
     /* ── Hero ── */
-    #hero {
-      padding: clamp(5rem, 12vh, 9rem) 0 clamp(4rem, 8vh, 7rem);
-      border-bottom: 1px solid var(--border);
-    }
-    .hero-label {
-      font-family: var(--serif);
-      font-size: 0.68rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 2rem;
-    }
-    .hero-title {
-      font-family: var(--serif);
-      font-size: clamp(3.5rem, 9vw, 8rem);
-      font-weight: 600;
-      line-height: 0.88;
-      letter-spacing: -0.025em;
-      color: var(--ink);
-      margin-bottom: 2.5rem;
-    }
+    #hero { padding: clamp(5rem,12vh,9rem) 0 clamp(4rem,8vh,7rem); border-bottom: 1px solid var(--border); }
+    .hero-eyebrow { font-family: var(--serif); font-size: 0.68rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 2rem; }
+    .hero-title { font-family: var(--serif); font-size: clamp(3.5rem,9vw,8rem); font-weight: 600; line-height: 0.88; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 2.5rem; }
     .hero-title em { color: var(--gold); font-style: italic; }
-    .hero-row {
+    .hero-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; }
+    @media(max-width:680px){ .hero-row{ grid-template-columns:1fr; gap:2rem; } }
+    .hero-desc { font-size: 0.9rem; color: var(--ink-3); line-height: 1.85; font-weight: 300; max-width: 440px; }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .hs { border-top: 1px solid var(--border-2); padding-top: 1.25rem; display: flex; flex-direction: column; gap: 0.2rem; }
+    .hs-val { font-family: var(--serif); font-size: clamp(1.6rem,3vw,2.4rem); font-weight: 700; color: var(--gold); line-height: 1; letter-spacing: -0.03em; }
+    .hs-lbl { font-size: 0.68rem; color: var(--ink-4); line-height: 1.5; margin-top: 0.15rem; }
+
+    /* ── Section header ── */
+    .sec-head { padding: clamp(3.5rem,7vh,6rem) 0 2.5rem; border-top: 1px solid var(--border); display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .sec-label { font-family: var(--serif); font-size: 0.68rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--ink-4); display: block; margin-bottom: 0.75rem; }
+    .sec-title { font-family: var(--serif); font-size: clamp(2rem,4.5vw,3.5rem); font-weight: 600; line-height: 0.93; letter-spacing: -0.02em; color: var(--ink); }
+    .sec-title em { color: var(--gold); font-style: italic; }
+    .sec-note { font-size: 0.78rem; color: var(--ink-4); line-height: 1.6; max-width: 260px; text-align: right; }
+    @media(max-width:580px){ .sec-note{ display:none; } }
+
+    /* ═══════════════════════════════════════
+       ROBOT CARDS
+    ═══════════════════════════════════════ */
+    .robots-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: end;
-      margin-top: 4rem;
-    }
-    @media(max-width: 680px) { .hero-row { grid-template-columns: 1fr; gap: 2rem; } }
-    .hero-desc {
-      font-size: 0.92rem;
-      color: var(--ink-3);
-      line-height: 1.85;
-      font-weight: 300;
-      max-width: 460px;
-    }
-    .hero-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    .hs {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--border-2);
-    }
-    .hs-val {
-      font-family: var(--serif);
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      font-weight: 700;
-      color: var(--gold);
-      line-height: 1;
-      letter-spacing: -0.03em;
-    }
-    .hs-lbl { font-size: 0.7rem; color: var(--ink-4); line-height: 1.5; margin-top: 0.15rem; }
-
-    /* ── Section headings ── */
-    .section-header {
-      padding: clamp(3.5rem, 7vh, 6rem) 0 2.5rem;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
-      border-top: 1px solid var(--border);
-    }
-    .section-label {
-      font-family: var(--serif);
-      font-size: 0.68rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--ink-4);
-      display: block;
-      margin-bottom: 0.75rem;
-    }
-    .section-title {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
-      font-weight: 600;
-      line-height: 0.93;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
-    .section-title em { color: var(--gold); font-style: italic; }
-    .section-note {
-      font-size: 0.8rem;
-      color: var(--ink-4);
-      line-height: 1.6;
-      max-width: 280px;
-      text-align: right;
-    }
-    @media(max-width: 580px) { .section-note { display: none; } }
-
-    /* ── Deployment cards ── */
-    .deploy-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: clamp(3rem, 6vh, 5rem);
-    }
-    @media(max-width: 780px) { .deploy-grid { grid-template-columns: 1fr; } }
-
-    .deploy-card {
-      background: var(--bg);
-      padding: 2.5rem 2.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      cursor: default;
-      transition: background 0.35s var(--ease), transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
-      position: relative;
-      overflow: hidden;
-    }
-    .deploy-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(154,117,64,0.04) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.35s var(--ease);
-    }
-    .deploy-card:hover {
-      background: #fff;
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      z-index: 2;
-    }
-    .deploy-card:hover::before { opacity: 1; }
-
-    .deploy-card.featured {
-      background: var(--ink);
-      color: #f5f0e8;
-    }
-    .deploy-card.featured::before {
-      background: linear-gradient(135deg, rgba(180,140,80,0.15) 0%, transparent 60%);
-      opacity: 1;
-    }
-    .deploy-card.featured:hover {
-      background: #231f18;
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .dc-badge {
-      font-family: var(--serif);
-      font-size: 0.6rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .dc-badge::before {
-      content: '';
-      display: block;
-      width: 20px;
-      height: 1px;
-      background: var(--gold);
-    }
-    .featured .dc-badge { color: var(--gold-lt); }
-    .featured .dc-badge::before { background: var(--gold-lt); }
-
-    .dc-territory {
-      font-family: var(--serif);
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--ink);
-      line-height: 1.1;
-      margin-bottom: 0.25rem;
-    }
-    .featured .dc-territory { color: #f5f0e8; }
-
-    .dc-sub {
-      font-size: 0.72rem;
-      color: var(--ink-4);
-      margin-bottom: 2.25rem;
-    }
-    .featured .dc-sub { color: rgba(245,240,232,0.5); }
-
-    .dc-price {
-      font-family: var(--serif);
-      font-size: clamp(2.8rem, 5vw, 4rem);
-      font-weight: 700;
-      color: var(--gold);
-      line-height: 1;
-      letter-spacing: -0.04em;
-      margin-bottom: 0.4rem;
-    }
-    .featured .dc-price { color: var(--gold-lt); }
-
-    .dc-price-sub {
-      font-size: 0.73rem;
-      color: var(--ink-4);
-      line-height: 1.5;
-      margin-bottom: 2.5rem;
-    }
-    .featured .dc-price-sub { color: rgba(245,240,232,0.45); }
-
-    .dc-divider {
-      height: 1px;
-      background: var(--border);
-      margin-bottom: 2rem;
-    }
-    .featured .dc-divider { background: rgba(255,250,240,0.1); }
-
-    .dc-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      flex: 1;
-    }
-    .dc-features li {
-      font-size: 0.78rem;
-      color: var(--ink-3);
-      line-height: 1.55;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-    }
-    .featured .dc-features li { color: rgba(245,240,232,0.65); }
-    .dc-features li::before {
-      content: '✓';
-      font-size: 0.65rem;
-      color: var(--gold);
-      margin-top: 0.15rem;
-      flex-shrink: 0;
-      font-weight: 600;
-    }
-    .featured .dc-features li::before { color: var(--gold-lt); }
-
-    .dc-cta {
-      margin-top: 2.5rem;
-      padding: 0.85rem 1.5rem;
-      border: 1px solid var(--border-2);
-      border-radius: 2px;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.25s var(--ease);
-      text-align: center;
-      font-family: var(--sans);
-      text-decoration: none;
-      display: block;
-    }
-    .dc-cta:hover {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: #fff;
-    }
-    .featured .dc-cta {
-      border-color: rgba(255,250,240,0.2);
-      color: rgba(245,240,232,0.7);
-    }
-    .featured .dc-cta:hover {
-      background: var(--gold-mid);
-      border-color: var(--gold-mid);
-      color: #fff;
-    }
-
-    /* ── Robot capabilities (shop-able features) ── */
-    .feat-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: clamp(3rem, 6vh, 5rem);
+      border-radius: 6px;
+      overflow: visible;
+      margin-bottom: clamp(3rem,6vh,5rem);
     }
-    @media(max-width: 780px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media(max-width: 480px) { .feat-grid { grid-template-columns: 1fr; } }
+    @media(max-width:900px){ .robots-grid{ grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:520px){ .robots-grid{ grid-template-columns: 1fr; } }
 
-    .feat-card {
+    .robot-card {
       background: var(--bg);
-      padding: 2rem 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
       cursor: default;
-      transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
       position: relative;
+      transition: background 0.4s var(--ease), transform 0.4s var(--ease), box-shadow 0.4s var(--ease), z-index 0s;
+      overflow: hidden;
     }
-    .feat-card:hover {
+    .robot-card:first-child { border-radius: 5px 0 0 5px; }
+    .robot-card:last-child  { border-radius: 0 5px 5px 0; }
+    @media(max-width:900px){
+      .robot-card:nth-child(1){ border-radius:5px 0 0 0; }
+      .robot-card:nth-child(2){ border-radius:0 5px 0 0; }
+      .robot-card:nth-child(3){ border-radius:0 0 0 5px; }
+      .robot-card:nth-child(4){ border-radius:0 0 5px 0; }
+    }
+    .robot-card:hover {
       background: #fff;
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-      z-index: 2;
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-lg);
+      z-index: 10;
     }
-    .feat-icon {
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--gold-faint);
-      border-radius: 50%;
+    .robot-card.featured {
+      background: var(--ink);
+    }
+    .robot-card.featured:hover {
+      background: #231f18;
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 24px 64px rgba(26,22,18,0.25), 0 8px 24px rgba(26,22,18,0.15);
+    }
+
+    /* Robot visual area */
+    .robot-visual {
+      width: 100%;
+      aspect-ratio: 4/3;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 0.25rem;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .feat-card:hover .feat-icon {
-      border-color: var(--gold);
-      background: var(--gold-faint);
-    }
-    .feat-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .feat-name {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--ink);
-      line-height: 1.15;
-    }
-    .feat-desc {
-      font-size: 0.77rem;
-      color: var(--ink-4);
-      line-height: 1.7;
-    }
-    .feat-tag {
-      font-family: var(--serif);
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-top: auto;
-      padding-top: 0.5rem;
-    }
-
-    /* ── ROI table section ── */
-    .roi-section {
-      background: var(--ink);
-      margin: 0 -1px;
-      padding: clamp(3.5rem, 7vh, 6rem) clamp(1.5rem, 5vw, 5rem);
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem;
+      transition: background 0.4s var(--ease);
       position: relative;
       overflow: hidden;
     }
-    .roi-section::before {
+    .robot-card:hover .robot-visual { background: #f0ede8; }
+    .robot-card.featured .robot-visual { background: #110e08; border-bottom-color: rgba(255,250,240,0.07); }
+    .robot-card.featured:hover .robot-visual { background: #160f08; }
+
+    /* Subtle grid lines in visual */
+    .robot-visual::before {
       content: '';
       position: absolute;
-      top: -200px; right: -200px;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(180,140,80,0.08) 0%, transparent 60%);
-      pointer-events: none;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.5;
     }
-    .roi-inner { max-width: 1160px; margin: 0 auto; }
-    .roi-label {
+    .robot-card.featured .robot-visual::before { background-image: linear-gradient(rgba(255,250,240,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,250,240,0.04) 1px, transparent 1px); }
+
+    .robot-svg {
+      position: relative;
+      z-index: 1;
+      transition: transform 0.5s var(--ease);
+    }
+    .robot-card:hover .robot-svg { transform: translateY(-4px); }
+
+    /* Body content */
+    .robot-body { padding: 1.75rem 1.75rem 1.5rem; display: flex; flex-direction: column; gap: 0; flex: 1; }
+
+    .robot-badge {
       font-family: var(--serif);
-      font-size: 0.68rem;
+      font-size: 0.58rem;
       letter-spacing: 0.5em;
       text-transform: uppercase;
       color: var(--gold);
-      display: block;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
     }
-    .roi-title {
+    .robot-badge::before { content: ''; display: block; width: 16px; height: 1px; background: var(--gold); flex-shrink: 0; }
+    .featured .robot-badge { color: rgba(212,176,122,0.8); }
+    .featured .robot-badge::before { background: rgba(212,176,122,0.5); }
+
+    .robot-name {
       font-family: var(--serif);
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-size: 1.35rem;
       font-weight: 600;
-      line-height: 0.93;
-      letter-spacing: -0.02em;
-      color: #f5f0e8;
-      margin-bottom: 3rem;
-    }
-    .roi-title em { color: var(--gold-lt); font-style: italic; }
-
-    .roi-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: rgba(255,250,240,0.07);
-      border: 1px solid rgba(255,250,240,0.07);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 3rem;
-    }
-    @media(max-width: 680px) { .roi-grid { grid-template-columns: 1fr; } }
-
-    .roi-card {
-      background: #110e08;
-      padding: 2.5rem 2.25rem;
-      transition: background 0.3s var(--ease);
-    }
-    .roi-card:hover { background: #1a1512; }
-    .roi-card-label {
-      font-family: var(--serif);
-      font-size: 0.62rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: rgba(245,240,232,0.3);
-      display: block;
-      margin-bottom: 0.75rem;
-    }
-    .roi-num {
-      font-family: var(--serif);
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 700;
-      color: var(--gold-lt);
-      line-height: 1;
-      letter-spacing: -0.04em;
-      margin-bottom: 0.5rem;
-    }
-    .roi-num.muted { color: rgba(245,240,232,0.6); }
-    .roi-desc {
-      font-size: 0.76rem;
-      color: rgba(245,240,232,0.4);
-      line-height: 1.65;
-      max-width: 340px;
-    }
-
-    .roi-breakdown {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-    }
-    @media(max-width: 780px) { .roi-breakdown { grid-template-columns: repeat(2, 1fr); } }
-    .rb {
-      border-top: 1px solid rgba(255,250,240,0.1);
-      padding-top: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      transition: border-color 0.3s;
-      cursor: default;
-    }
-    .rb:hover { border-color: var(--gold); }
-    .rb-val {
-      font-family: var(--serif);
-      font-size: clamp(1.5rem, 2.5vw, 2rem);
-      font-weight: 700;
-      color: var(--gold-lt);
-      line-height: 1;
-      letter-spacing: -0.03em;
-    }
-    .rb-lbl { font-size: 0.7rem; color: rgba(245,240,232,0.35); line-height: 1.5; margin-top: 0.2rem; }
-
-    /* ── Add-ons section ── */
-    .addon-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: clamp(3rem, 6vh, 5rem);
-    }
-    @media(max-width: 580px) { .addon-grid { grid-template-columns: 1fr; } }
-
-    .addon-card {
-      background: var(--bg);
-      padding: 2rem 2.25rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 1.5rem;
-      transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-      cursor: default;
-    }
-    .addon-card:hover {
-      background: #fff;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-      z-index: 2;
-      position: relative;
-    }
-    .addon-num {
-      font-family: var(--serif);
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--gold-faint);
-      line-height: 1;
-      flex-shrink: 0;
-      transition: color 0.3s;
-    }
-    .addon-card:hover .addon-num { color: var(--gold); }
-    .addon-content { display: flex; flex-direction: column; gap: 0.4rem; }
-    .addon-name {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--ink);
-      line-height: 1.15;
-    }
-    .addon-desc { font-size: 0.76rem; color: var(--ink-4); line-height: 1.65; }
-
-    /* ── Territory map section ── */
-    .territory-section {
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: clamp(3rem, 6vh, 5rem);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    @media(max-width: 680px) { .territory-section { grid-template-columns: 1fr; } }
-
-    .terr-panel {
-      padding: 2.5rem 2.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      background: var(--bg);
-      transition: background 0.3s var(--ease);
-      cursor: default;
-    }
-    .terr-panel:first-child { border-right: 1px solid var(--border); }
-    .terr-panel:hover { background: #fff; }
-    .terr-tag {
-      font-family: var(--serif);
-      font-size: 0.62rem;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .terr-name {
-      font-family: var(--serif);
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: var(--ink);
       line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
     }
-    .terr-num {
+    .featured .robot-name { color: #f5f0e8; }
+
+    .robot-tagline { font-size: 0.7rem; color: var(--ink-4); line-height: 1.5; margin-bottom: 1.5rem; }
+    .featured .robot-tagline { color: rgba(245,240,232,0.4); }
+
+    .robot-price {
       font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(2.2rem,4vw,3.2rem);
       font-weight: 700;
       color: var(--gold);
       line-height: 1;
       letter-spacing: -0.04em;
     }
-    .terr-desc { font-size: 0.76rem; color: var(--ink-4); line-height: 1.7; max-width: 340px; }
-    .terr-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
-    .terr-list li {
-      font-size: 0.75rem;
-      color: var(--ink-3);
-      padding-left: 1rem;
-      position: relative;
-      line-height: 1.5;
+    .featured .robot-price { color: var(--gold-lt); }
+
+    .robot-price-sub { font-size: 0.69rem; color: var(--ink-4); line-height: 1.5; margin-top: 0.3rem; margin-bottom: 1.5rem; }
+    .featured .robot-price-sub { color: rgba(245,240,232,0.35); }
+
+    .robot-divider { height: 1px; background: var(--border); margin-bottom: 1.25rem; }
+    .featured .robot-divider { background: rgba(255,250,240,0.08); }
+
+    .robot-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; flex: 1; }
+    .robot-features li { font-size: 0.74rem; color: var(--ink-3); line-height: 1.5; display: flex; align-items: flex-start; gap: 0.55rem; }
+    .featured .robot-features li { color: rgba(245,240,232,0.55); }
+    .robot-features li::before { content: '✓'; font-size: 0.62rem; color: var(--gold); margin-top: 0.1rem; flex-shrink: 0; font-weight: 600; }
+    .featured .robot-features li::before { color: var(--gold-lt); }
+
+    .robot-cta {
+      display: block; margin-top: 1.75rem;
+      padding: 0.8rem 1.25rem;
+      border: 1px solid var(--border-2); border-radius: 2px;
+      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-3); background: transparent;
+      text-align: center; text-decoration: none; font-family: var(--sans);
+      transition: all 0.25s var(--ease);
     }
-    .terr-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 0.7rem; }
-    .terr-list li strong { color: var(--ink-2); font-weight: 500; }
+    .robot-cta:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+    .featured .robot-cta { border-color: rgba(255,250,240,0.15); color: rgba(245,240,232,0.55); }
+    .featured .robot-cta:hover { background: var(--gold-mid); border-color: var(--gold-mid); color: #fff; }
+
+    /* ── Capabilities grid ── */
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: clamp(3rem,6vh,5rem); }
+    @media(max-width:780px){ .feat-grid{ grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:440px){ .feat-grid{ grid-template-columns: 1fr; } }
+
+    .feat-card { background: var(--bg); padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; cursor: default; transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+    .feat-card:hover { background: #fff; transform: translateY(-3px); box-shadow: var(--shadow-md); z-index: 2; position: relative; }
+    .feat-icon { width: 36px; height: 36px; border: 1px solid var(--gold-faint); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.25rem; transition: border-color 0.3s, background 0.3s; }
+    .feat-card:hover .feat-icon { border-color: var(--gold); background: var(--gold-faint); }
+    .feat-icon svg { width: 15px; height: 15px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .feat-name { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--ink); line-height: 1.15; }
+    .feat-desc { font-size: 0.75rem; color: var(--ink-4); line-height: 1.7; }
+    .feat-tag { font-family: var(--serif); font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-top: auto; padding-top: 0.5rem; }
+
+    /* ── ROI (dark) ── */
+    .roi-wrap { background: var(--ink); padding: clamp(3.5rem,7vh,6rem) clamp(1.25rem,4vw,4rem); position: relative; overflow: hidden; }
+    .roi-wrap::before { content:''; position:absolute; top:-200px; right:-200px; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(180,140,80,0.08) 0%,transparent 60%); pointer-events:none; }
+    .roi-inner { max-width: 1200px; margin: 0 auto; }
+    .roi-label { font-family:var(--serif); font-size:0.68rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:1.25rem; }
+    .roi-title { font-family:var(--serif); font-size:clamp(2rem,4.5vw,3.5rem); font-weight:600; line-height:0.93; letter-spacing:-0.02em; color:#f5f0e8; margin-bottom:3rem; }
+    .roi-title em { color:var(--gold-lt); font-style:italic; }
+    .roi-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:rgba(255,250,240,0.07); border:1px solid rgba(255,250,240,0.07); border-radius:3px; overflow:hidden; margin-bottom:3rem; }
+    @media(max-width:600px){ .roi-grid{ grid-template-columns:1fr; } }
+    .roi-card { background:#110e08; padding:2.5rem 2.25rem; transition:background 0.3s; }
+    .roi-card:hover { background:#1a1512; }
+    .roi-card-lbl { font-family:var(--serif); font-size:0.6rem; letter-spacing:0.4em; text-transform:uppercase; color:rgba(245,240,232,0.3); display:block; margin-bottom:0.75rem; }
+    .roi-num { font-family:var(--serif); font-size:clamp(2.5rem,5vw,4.5rem); font-weight:700; color:var(--gold-lt); line-height:1; letter-spacing:-0.04em; margin-bottom:0.5rem; }
+    .roi-num.muted { color:rgba(245,240,232,0.55); }
+    .roi-desc { font-size:0.75rem; color:rgba(245,240,232,0.38); line-height:1.65; max-width:340px; }
+    .roi-breakdown { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
+    @media(max-width:780px){ .roi-breakdown{ grid-template-columns:repeat(2,1fr); } }
+    .rb { border-top:1px solid rgba(255,250,240,0.1); padding-top:1.25rem; display:flex; flex-direction:column; gap:0.2rem; transition:border-color 0.3s; cursor:default; }
+    .rb:hover { border-color:var(--gold); }
+    .rb-val { font-family:var(--serif); font-size:clamp(1.5rem,2.5vw,2rem); font-weight:700; color:var(--gold-lt); line-height:1; letter-spacing:-0.03em; }
+    .rb-lbl { font-size:0.68rem; color:rgba(245,240,232,0.33); line-height:1.5; margin-top:0.2rem; }
+
+    /* ── Territory ── */
+    .terr-grid { border:1px solid var(--border); border-radius:4px; overflow:hidden; display:grid; grid-template-columns:1fr 1fr; margin-bottom:clamp(3rem,6vh,5rem); }
+    @media(max-width:640px){ .terr-grid{ grid-template-columns:1fr; } }
+    .terr-panel { padding:2.5rem 2.25rem; background:var(--bg); display:flex; flex-direction:column; gap:0.85rem; transition:background 0.3s; cursor:default; }
+    .terr-panel:first-child { border-right:1px solid var(--border); }
+    .terr-panel:hover { background:#fff; }
+    .terr-tag { font-family:var(--serif); font-size:0.6rem; letter-spacing:0.45em; text-transform:uppercase; color:var(--gold); }
+    .terr-name { font-family:var(--serif); font-size:1.5rem; font-weight:600; color:var(--ink); line-height:1.1; }
+    .terr-num { font-family:var(--serif); font-size:clamp(2rem,4vw,3rem); font-weight:700; color:var(--gold); line-height:1; letter-spacing:-0.04em; }
+    .terr-desc { font-size:0.75rem; color:var(--ink-4); line-height:1.7; max-width:340px; }
+    .terr-list { list-style:none; display:flex; flex-direction:column; gap:0.5rem; margin-top:0.25rem; }
+    .terr-list li { font-size:0.73rem; color:var(--ink-3); padding-left:1rem; position:relative; line-height:1.5; }
+    .terr-list li::before { content:'—'; position:absolute; left:0; color:var(--gold); font-size:0.68rem; }
+    .terr-list li strong { color:var(--ink-2); font-weight:500; }
+
+    /* ── Add-ons ── */
+    .addon-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:4px; overflow:hidden; margin-bottom:clamp(3rem,6vh,5rem); }
+    @media(max-width:540px){ .addon-grid{ grid-template-columns:1fr; } }
+    .addon-card { background:var(--bg); padding:1.75rem 2rem; display:flex; align-items:flex-start; gap:1.25rem; transition:background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease); cursor:default; }
+    .addon-card:hover { background:#fff; transform:translateY(-2px); box-shadow:var(--shadow-md); z-index:2; position:relative; }
+    .addon-num { font-family:var(--serif); font-size:1.75rem; font-weight:700; color:var(--gold-faint); line-height:1; flex-shrink:0; transition:color 0.3s; }
+    .addon-card:hover .addon-num { color:var(--gold); }
+    .addon-name { font-family:var(--serif); font-size:1.05rem; font-weight:600; color:var(--ink); line-height:1.15; margin-bottom:0.35rem; }
+    .addon-desc { font-size:0.74rem; color:var(--ink-4); line-height:1.65; }
 
     /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem clamp(1.5rem, 5vw, 5rem);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .footer-note { font-size: 0.73rem; color: var(--ink-4); line-height: 1.6; }
-    .footer-note strong { color: var(--ink-3); font-weight: 500; }
-    .footer-label {
-      font-family: var(--serif);
-      font-size: 0.6rem;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--ink-4);
-      white-space: nowrap;
-    }
+    footer { border-top:1px solid var(--border); padding:1.75rem clamp(1.25rem,4vw,4rem); display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .footer-note { font-size:0.72rem; color:var(--ink-4); line-height:1.6; }
+    .footer-note strong { color:var(--ink-3); font-weight:500; }
+    .footer-lbl { font-family:var(--serif); font-size:0.58rem; letter-spacing:0.45em; text-transform:uppercase; color:var(--ink-4); white-space:nowrap; }
   </style>
 </head>
 <body>
@@ -682,7 +318,7 @@
 <nav>
   <div class="nav-brand">The <em>Machine</em></div>
   <ul class="nav-links">
-    <li><a href="#deployments">Deployments</a></li>
+    <li><a href="#robots">Models</a></li>
     <li><a href="#capabilities">Capabilities</a></li>
     <li><a href="#roi">Returns</a></li>
     <li><a href="#territory">Territory</a></li>
@@ -692,109 +328,281 @@
 <!-- HERO -->
 <section id="hero">
   <div class="page">
-    <span class="hero-label r">Product Catalog — 2026</span>
-    <h1 class="hero-title r d1">
-      One robot.<br>
-      <em>Permanent edge.</em>
-    </h1>
+    <span class="hero-eyebrow r">Deployment Catalog — 2026</span>
+    <h1 class="hero-title r d1">One robot.<br><em>Permanent edge.</em></h1>
     <div class="hero-row">
       <p class="hero-desc r d2">
         An AI that sees, hears, speaks, moves, and remembers every guest.
-        Trained on your brand before it arrives. Gets smarter every single month it runs.
-        Deployed at the Westin. At the Marriott. Proven at $50–70K engagements.
+        Trained on your brand before it arrives. Gets smarter every month it runs.
+        Deployed at the Westin, the Marriott, proven at $50–70K engagements.
         This catalog covers permanent installations — the ones that compound.
       </p>
       <div class="hero-stats r d3">
-        <div class="hs">
-          <div class="hs-val">38×</div>
-          <div class="hs-lbl">Year-one return at Rutherford deployment</div>
-        </div>
-        <div class="hs">
-          <div class="hs-val">200K+</div>
-          <div class="hs-lbl">Daily impressions at a Napa property</div>
-        </div>
-        <div class="hs">
-          <div class="hs-val">$10.5M</div>
-          <div class="hs-lbl">Measurable value delivered, Year 1</div>
-        </div>
-        <div class="hs">
-          <div class="hs-val">Day 1</div>
-          <div class="hs-lbl">Operational. No onboarding lag.</div>
-        </div>
+        <div class="hs"><div class="hs-val">38×</div><div class="hs-lbl">Year-one return, Rutherford deployment</div></div>
+        <div class="hs"><div class="hs-val">200K+</div><div class="hs-lbl">Daily impressions at a Napa property</div></div>
+        <div class="hs"><div class="hs-val">$10.5M</div><div class="hs-lbl">Measurable value delivered, Year 1</div></div>
+        <div class="hs"><div class="hs-val">Day 1</div><div class="hs-lbl">Operational. No onboarding lag.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DEPLOYMENTS -->
-<section id="deployments">
+<!-- ROBOTS / DEPLOYMENTS -->
+<section id="robots">
   <div class="page">
-    <div class="section-header">
+    <div class="sec-head">
       <div>
-        <span class="section-label r">Deployments</span>
-        <h2 class="section-title r d1">Choose your<br><em>territory.</em></h2>
+        <span class="sec-label r">The Models</span>
+        <h2 class="sec-title r d1">Choose your<br><em>robot.</em></h2>
       </div>
-      <p class="section-note r d2">All prices are one-time deployment fees plus monthly retainer. Retainer covers updates, training, and support.</p>
+      <p class="sec-note r d2">All prices are one-time deployment + monthly retainer. Every model ships with full brand training, guest memory, and content engine.</p>
     </div>
+  </div>
 
-    <div class="deploy-grid">
-      <!-- Suisun Starter -->
-      <div class="deploy-card r">
-        <span class="dc-badge">Suisun Valley</span>
-        <div class="dc-territory">The Starter.<br>Single Robot.</div>
-        <div class="dc-sub">First robot in the valley. First mover advantage.</div>
-        <div class="dc-price">$100K</div>
-        <div class="dc-price-sub">One-time deployment · then $5K / month</div>
-        <div class="dc-divider"></div>
-        <ul class="dc-features">
-          <li>Full robot deployment at your tasting room</li>
-          <li>Brand training — wines, history, pricing, upsells</li>
-          <li>Guest memory & recognition system</li>
-          <li>Content generation (photos, clips, posts)</li>
-          <li>Monthly AI model updates</li>
-          <li>Dedicated support line</li>
-        </ul>
-        <a href="mailto:eljordp@gmail.com?subject=Suisun Single Robot" class="dc-cta">Inquire</a>
+  <div class="page">
+    <div class="robots-grid">
+
+      <!-- DOG ROBOT -->
+      <div class="robot-card r">
+        <div class="robot-visual">
+          <!-- Dog Robot SVG -->
+          <svg class="robot-svg" width="140" height="120" viewBox="0 0 140 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Body -->
+            <rect x="35" y="38" width="70" height="38" rx="10" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <!-- Head -->
+            <rect x="80" y="22" width="38" height="28" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <!-- Ear / sensor on head -->
+            <rect x="92" y="14" width="6" height="10" rx="2" fill="#b48c50"/>
+            <circle cx="95" cy="13" r="3" fill="#9a7540"/>
+            <!-- Eye -->
+            <circle cx="106" cy="34" r="5" fill="#1a1612" opacity="0.85"/>
+            <circle cx="108" cy="32" r="1.5" fill="#fff" opacity="0.6"/>
+            <!-- Nose sensor -->
+            <circle cx="117" cy="38" r="3" fill="#9a7540" opacity="0.7"/>
+            <!-- Snout -->
+            <path d="M112 38 Q118 38 120 42" stroke="#9a7540" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <!-- Body detail lines -->
+            <line x1="35" y1="52" x2="105" y2="52" stroke="#9a7540" stroke-width="0.8" opacity="0.4"/>
+            <line x1="60" y1="38" x2="60" y2="76" stroke="#9a7540" stroke-width="0.8" opacity="0.3"/>
+            <!-- Tail -->
+            <path d="M35 52 Q18 45 14 36 Q12 28 20 26" stroke="#9a7540" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <!-- Legs — front left -->
+            <rect x="42" y="72" width="12" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <rect x="39" y="96" width="18" height="7" rx="3" fill="#b48c50" opacity="0.7"/>
+            <!-- Legs — front right -->
+            <rect x="58" y="72" width="12" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <rect x="55" y="96" width="18" height="7" rx="3" fill="#b48c50" opacity="0.7"/>
+            <!-- Legs — back left -->
+            <rect x="74" y="72" width="12" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <rect x="71" y="96" width="18" height="7" rx="3" fill="#b48c50" opacity="0.7"/>
+            <!-- Legs — back right -->
+            <rect x="90" y="72" width="12" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <rect x="87" y="96" width="18" height="7" rx="3" fill="#b48c50" opacity="0.7"/>
+            <!-- Antenna -->
+            <line x1="70" y1="38" x2="70" y2="26" stroke="#9a7540" stroke-width="1.2"/>
+            <circle cx="70" cy="24" r="3" fill="#9a7540"/>
+          </svg>
+        </div>
+        <div class="robot-body">
+          <span class="robot-badge">Entry · Outdoor</span>
+          <div class="robot-name">The Dog.<br>Scout model.</div>
+          <div class="robot-tagline">Patrols, greets, guides. Perfect for outdoor estates and vineyard tours.</div>
+          <div class="robot-price">$50K</div>
+          <div class="robot-price-sub">One-time · then $3K / month</div>
+          <div class="robot-divider"></div>
+          <ul class="robot-features">
+            <li>4-legged outdoor mobility — vineyard terrain ready</li>
+            <li>Greets arriving guests, guides to tasting rooms</li>
+            <li>Brand voice loaded pre-deployment</li>
+            <li>Camera system — captures UGC moments automatically</li>
+            <li>Monthly AI updates</li>
+          </ul>
+          <a href="mailto:eljordp@gmail.com?subject=Dog Robot Inquiry" class="robot-cta">Inquire</a>
+        </div>
       </div>
 
-      <!-- Napa Featured -->
-      <div class="deploy-card featured r d1">
-        <span class="dc-badge">Napa Valley · Recommended</span>
-        <div class="dc-territory" style="color:#f5f0e8;">The Premier.<br>Single Robot.</div>
-        <div class="dc-sub">Rutherford corridor. 38× ROI. Most valuable territory.</div>
-        <div class="dc-price">$175K</div>
-        <div class="dc-price-sub">One-time deployment · then $8.5K / month</div>
-        <div class="dc-divider"></div>
-        <ul class="dc-features">
-          <li>Full robot deployment in Napa / Rutherford corridor</li>
-          <li>Deep brand training — full estate knowledge</li>
-          <li>VIP guest recognition & preference tracking</li>
-          <li>Viral content engine — daily posts, reels, UGC triggers</li>
-          <li>Private tasting upsell workflow</li>
-          <li>Monthly model updates + quarterly strategy review</li>
-          <li>Priority support & on-site visits</li>
-        </ul>
-        <a href="mailto:eljordp@gmail.com?subject=Napa Premier Deployment" class="dc-cta">Inquire</a>
+      <!-- SINGLE HUMANOID -->
+      <div class="robot-card r d1">
+        <div class="robot-visual">
+          <!-- Humanoid Robot SVG -->
+          <svg class="robot-svg" width="100" height="150" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Head -->
+            <rect x="28" y="8" width="44" height="36" rx="10" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <!-- Eyes -->
+            <rect x="35" y="18" width="11" height="8" rx="3" fill="#1a1612" opacity="0.85"/>
+            <rect x="54" y="18" width="11" height="8" rx="3" fill="#1a1612" opacity="0.85"/>
+            <circle cx="39" cy="20" r="2" fill="#fff" opacity="0.5"/>
+            <circle cx="58" cy="20" r="2" fill="#fff" opacity="0.5"/>
+            <!-- Mouth / speaker -->
+            <rect x="36" y="32" width="28" height="5" rx="2.5" fill="#9a7540" opacity="0.5"/>
+            <line x1="42" y1="34.5" x2="42" y2="34.5" stroke="#e8d9c0" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="50" y1="34.5" x2="50" y2="34.5" stroke="#e8d9c0" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="58" y1="34.5" x2="58" y2="34.5" stroke="#e8d9c0" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Antenna -->
+            <line x1="50" y1="8" x2="50" y2="0" stroke="#9a7540" stroke-width="1.5"/>
+            <circle cx="50" cy="0" r="3.5" fill="#9a7540"/>
+            <!-- Neck -->
+            <rect x="43" y="44" width="14" height="8" rx="3" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
+            <!-- Torso -->
+            <rect x="20" y="52" width="60" height="50" rx="10" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <!-- Chest panel -->
+            <rect x="30" y="60" width="40" height="30" rx="5" fill="#9a7540" opacity="0.12"/>
+            <circle cx="50" cy="70" r="7" fill="none" stroke="#9a7540" stroke-width="1.2" opacity="0.6"/>
+            <circle cx="50" cy="70" r="3" fill="#9a7540" opacity="0.5"/>
+            <line x1="30" y1="82" x2="70" y2="82" stroke="#9a7540" stroke-width="0.8" opacity="0.3"/>
+            <!-- Left arm -->
+            <rect x="6" y="54" width="14" height="38" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <ellipse cx="13" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.6"/>
+            <!-- Right arm -->
+            <rect x="80" y="54" width="14" height="38" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <ellipse cx="87" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.6"/>
+            <!-- Left leg -->
+            <rect x="26" y="102" width="18" height="36" rx="8" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <rect x="22" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.6"/>
+            <!-- Right leg -->
+            <rect x="56" y="102" width="18" height="36" rx="8" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+            <rect x="52" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="robot-body">
+          <span class="robot-badge">Standard</span>
+          <div class="robot-name">The Standard.<br>Single robot.</div>
+          <div class="robot-tagline">Tasting room host. Sees, speaks, remembers. First robot in the valley.</div>
+          <div class="robot-price">$100K</div>
+          <div class="robot-price-sub">One-time · then $5K / month</div>
+          <div class="robot-divider"></div>
+          <ul class="robot-features">
+            <li>Full tasting room deployment — humanoid, mobile</li>
+            <li>Guest recognition and memory system</li>
+            <li>Brand training — wines, history, pricing, upsells</li>
+            <li>Content engine — clips, photos, UGC triggers</li>
+            <li>Private tasting upsell workflow</li>
+            <li>Monthly AI updates</li>
+          </ul>
+          <a href="mailto:eljordp@gmail.com?subject=Single Robot Inquiry" class="robot-cta">Inquire</a>
+        </div>
       </div>
 
-      <!-- Dual Robot -->
-      <div class="deploy-card r d2">
-        <span class="dc-badge">Multi-Location</span>
-        <div class="dc-territory">The Fleet.<br>Two Robots.</div>
-        <div class="dc-sub">Cover two properties. Own both conversations.</div>
-        <div class="dc-price">$175K</div>
-        <div class="dc-price-sub">Suisun two-robot · then $8.5K / month</div>
-        <div class="dc-divider"></div>
-        <ul class="dc-features">
-          <li>Two robots across two locations or two rooms</li>
-          <li>Unified guest data — profile follows the visitor everywhere</li>
-          <li>Cross-location upsell workflows</li>
-          <li>Shared content calendar and brand voice</li>
-          <li>Coordinated viral moments across both properties</li>
-          <li>Fleet management dashboard</li>
-        </ul>
-        <a href="mailto:eljordp@gmail.com?subject=Fleet Deployment" class="dc-cta">Inquire</a>
+      <!-- NAPA PREMIER (featured / dark) -->
+      <div class="robot-card featured r d2">
+        <div class="robot-visual">
+          <!-- Napa Premier robot — same humanoid but gold themed -->
+          <svg class="robot-svg" width="100" height="150" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Head -->
+            <rect x="28" y="8" width="44" height="36" rx="10" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
+            <!-- Eyes — glowing -->
+            <rect x="35" y="18" width="11" height="8" rx="3" fill="#b48c50" opacity="0.9"/>
+            <rect x="54" y="18" width="11" height="8" rx="3" fill="#b48c50" opacity="0.9"/>
+            <rect x="38" y="20" width="5" height="3" rx="1" fill="#ffd980" opacity="0.7"/>
+            <rect x="57" y="20" width="5" height="3" rx="1" fill="#ffd980" opacity="0.7"/>
+            <!-- Crown / sensor ring -->
+            <circle cx="50" cy="8" r="6" fill="none" stroke="#b48c50" stroke-width="1.5" opacity="0.5"/>
+            <line x1="50" y1="2" x2="50" y2="-4" stroke="#b48c50" stroke-width="1.5"/>
+            <circle cx="50" cy="-5" r="3.5" fill="#b48c50"/>
+            <!-- Mouth -->
+            <rect x="36" y="32" width="28" height="5" rx="2.5" fill="#b48c50" opacity="0.4"/>
+            <!-- Neck -->
+            <rect x="43" y="44" width="14" height="8" rx="3" fill="#2a2218" stroke="#b48c50" stroke-width="1.2"/>
+            <!-- Torso -->
+            <rect x="20" y="52" width="60" height="50" rx="10" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
+            <!-- Chest glow panel -->
+            <rect x="30" y="60" width="40" height="30" rx="5" fill="#b48c50" opacity="0.08"/>
+            <circle cx="50" cy="70" r="8" fill="none" stroke="#b48c50" stroke-width="1.5" opacity="0.7"/>
+            <circle cx="50" cy="70" r="3.5" fill="#b48c50" opacity="0.7"/>
+            <circle cx="50" cy="70" r="1.5" fill="#ffd980" opacity="0.6"/>
+            <line x1="30" y1="82" x2="70" y2="82" stroke="#b48c50" stroke-width="0.8" opacity="0.25"/>
+            <!-- Left arm -->
+            <rect x="6" y="54" width="14" height="38" rx="7" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
+            <ellipse cx="13" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.5"/>
+            <!-- Right arm -->
+            <rect x="80" y="54" width="14" height="38" rx="7" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
+            <ellipse cx="87" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.5"/>
+            <!-- Left leg -->
+            <rect x="26" y="102" width="18" height="36" rx="8" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
+            <rect x="22" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.5"/>
+            <!-- Right leg -->
+            <rect x="56" y="102" width="18" height="36" rx="8" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
+            <rect x="52" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="robot-body">
+          <span class="robot-badge">Napa Valley · Recommended</span>
+          <div class="robot-name">The Premier.<br>Rutherford.</div>
+          <div class="robot-tagline">38× ROI. Most valuable territory. Most powerful deployment.</div>
+          <div class="robot-price">$175K</div>
+          <div class="robot-price-sub">One-time · then $8.5K / month</div>
+          <div class="robot-divider"></div>
+          <ul class="robot-features">
+            <li>Full Napa / Rutherford corridor deployment</li>
+            <li>Deep brand training — full estate knowledge</li>
+            <li>VIP recognition & preference tracking</li>
+            <li>Viral content engine — daily reels, UGC triggers</li>
+            <li>Private tasting upsell workflow built in</li>
+            <li>Monthly updates + quarterly strategy review</li>
+            <li>Priority on-site support & visits</li>
+          </ul>
+          <a href="mailto:eljordp@gmail.com?subject=Napa Premier Inquiry" class="robot-cta">Inquire</a>
+        </div>
       </div>
+
+      <!-- FLEET -->
+      <div class="robot-card r d3">
+        <div class="robot-visual">
+          <!-- Two robots side by side — fleet -->
+          <svg class="robot-svg" width="150" height="130" viewBox="0 0 150 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- ROBOT 1 (small, left) -->
+            <rect x="8" y="18" width="34" height="28" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
+            <rect x="14" y="25" width="8" height="6" rx="2" fill="#1a1612" opacity="0.7"/>
+            <rect x="26" y="25" width="8" height="6" rx="2" fill="#1a1612" opacity="0.7"/>
+            <line x1="25" y1="18" x2="25" y2="11" stroke="#9a7540" stroke-width="1.2"/>
+            <circle cx="25" cy="9" r="2.5" fill="#9a7540"/>
+            <rect x="33" y="16" width="10" height="6" rx="2" fill="#9a7540" opacity="0.4"/>
+            <rect x="4" y="46" width="42" height="38" rx="8" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
+            <circle cx="25" cy="62" r="5" fill="none" stroke="#9a7540" stroke-width="1" opacity="0.5"/>
+            <rect x="8" y="56" width="9" height="24" rx="4" fill="#e8d9c0" stroke="#9a7540" stroke-width="1"/>
+            <rect x="33" y="56" width="9" height="24" rx="4" fill="#e8d9c0" stroke="#9a7540" stroke-width="1"/>
+            <rect x="10" y="84" width="11" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
+            <rect x="29" y="84" width="11" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
+            <rect x="7" y="107" width="17" height="7" rx="3" fill="#b48c50" opacity="0.5"/>
+            <rect x="26" y="107" width="17" height="7" rx="3" fill="#b48c50" opacity="0.5"/>
+            <!-- ROBOT 2 (main, right, darker) -->
+            <rect x="88" y="10" width="44" height="34" rx="9" fill="#2a2218" stroke="#b48c50" stroke-width="1.5"/>
+            <rect x="96" y="19" width="10" height="7" rx="3" fill="#b48c50" opacity="0.8"/>
+            <rect x="114" y="19" width="10" height="7" rx="3" fill="#b48c50" opacity="0.8"/>
+            <line x1="110" y1="10" x2="110" y2="3" stroke="#b48c50" stroke-width="1.4"/>
+            <circle cx="110" cy="1" r="3" fill="#b48c50"/>
+            <rect x="82" y="44" width="56" height="46" rx="9" fill="#2a2218" stroke="#b48c50" stroke-width="1.5"/>
+            <circle cx="110" cy="64" r="7" fill="none" stroke="#b48c50" stroke-width="1.2" opacity="0.6"/>
+            <circle cx="110" cy="64" r="3" fill="#b48c50" opacity="0.6"/>
+            <rect x="73" y="47" width="9" height="34" rx="4" fill="#2a2218" stroke="#b48c50" stroke-width="1.2"/>
+            <rect x="138" y="47" width="9" height="34" rx="4" fill="#2a2218" stroke="#b48c50" stroke-width="1.2"/>
+            <rect x="88" y="90" width="15" height="32" rx="6" fill="#2a2218" stroke="#b48c50" stroke-width="1.5"/>
+            <rect x="117" y="90" width="15" height="32" rx="6" fill="#2a2218" stroke="#b48c50" stroke-width="1.5"/>
+            <rect x="85" y="117" width="21" height="8" rx="3" fill="#b48c50" opacity="0.5"/>
+            <rect x="114" y="117" width="21" height="8" rx="3" fill="#b48c50" opacity="0.5"/>
+            <!-- Connection line between robots -->
+            <path d="M50 68 Q69 62 82 68" stroke="#9a7540" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="robot-body">
+          <span class="robot-badge">Multi-Location</span>
+          <div class="robot-name">The Fleet.<br>Two robots.</div>
+          <div class="robot-tagline">Two properties. One unified guest intelligence layer.</div>
+          <div class="robot-price">$220K</div>
+          <div class="robot-price-sub">Suisun 2-robot · then $11K / month</div>
+          <div class="robot-divider"></div>
+          <ul class="robot-features">
+            <li>Two robots across two locations or rooms</li>
+            <li>Unified guest profiles — follows visitor everywhere</li>
+            <li>Cross-location upsell workflows</li>
+            <li>Shared content calendar and brand voice</li>
+            <li>Fleet management dashboard</li>
+            <li>Coordinated viral moments across both properties</li>
+          </ul>
+          <a href="mailto:eljordp@gmail.com?subject=Fleet Inquiry" class="robot-cta">Inquire</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -802,66 +610,48 @@
 <!-- CAPABILITIES -->
 <section id="capabilities">
   <div class="page">
-    <div class="section-header">
+    <div class="sec-head">
       <div>
-        <span class="section-label r">Capabilities</span>
-        <h2 class="section-title r d1">What the<br><em>robot does.</em></h2>
+        <span class="sec-label r">Capabilities</span>
+        <h2 class="sec-title r d1">What the<br><em>robot does.</em></h2>
       </div>
-      <p class="section-note r d2">Every capability ships standard. There is no basic version.</p>
+      <p class="sec-note r d2">Every capability ships standard. There is no basic version.</p>
     </div>
-
     <div class="feat-grid">
       <div class="feat-card r">
-        <div class="feat-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
         <div class="feat-name">Guest Recognition</div>
         <div class="feat-desc">Faces logged, preferences stored, last visit recalled. Greets returning guests by name before they say a word.</div>
         <div class="feat-tag">Memory system</div>
       </div>
-
       <div class="feat-card r d1">
-        <div class="feat-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
         <div class="feat-name">Brand Voice</div>
-        <div class="feat-desc">Your history, your wines, your family story, your pricing tiers — loaded in before day one. Speaks your brand fluently.</div>
+        <div class="feat-desc">Your history, your wines, your family story, your pricing tiers — loaded in before day one. Speaks your brand fluently from the first hello.</div>
         <div class="feat-tag">Training system</div>
       </div>
-
       <div class="feat-card r d2">
-        <div class="feat-icon">
-          <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-        </div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
         <div class="feat-name">Content Engine</div>
-        <div class="feat-desc">Captures photos and clips automatically. Posts, reels, and guest moments — generated while the robot works the room.</div>
+        <div class="feat-desc">Captures photos and clips automatically. Reels, posts, and guest moments generated while the robot works the room.</div>
         <div class="feat-tag">Media production</div>
       </div>
-
       <div class="feat-card r d3">
-        <div class="feat-icon">
-          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
         <div class="feat-name">Upsell Intelligence</div>
         <div class="feat-desc">Reads hesitation, gauges interest, times the pitch. Routes high-intent guests toward private tastings and premium pours automatically.</div>
         <div class="feat-tag">Revenue conversion</div>
       </div>
-
       <div class="feat-card r d4">
-        <div class="feat-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        </div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
         <div class="feat-name">Always On</div>
         <div class="feat-desc">No turnover. No training cycles. No sick days. Same quality host from the first guest to the five-hundredth.</div>
         <div class="feat-tag">Operational stability</div>
       </div>
-
       <div class="feat-card r d5">
-        <div class="feat-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        </div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
         <div class="feat-name">Monthly Compounding</div>
-        <div class="feat-desc">AI model updates every month. Month 12 is meaningfully smarter than month 1. The person you hired on day one stays the same. This one doesn't.</div>
+        <div class="feat-desc">AI model updates every month. Month 12 is meaningfully smarter than month 1. The person you hired stays the same. This one doesn't.</div>
         <div class="feat-tag">Long-term advantage</div>
       </div>
     </div>
@@ -869,42 +659,28 @@
 </section>
 
 <!-- ROI -->
-<section id="roi" style="padding: clamp(4rem,8vh,7rem) 0;">
-  <div class="roi-section">
+<section id="roi">
+  <div class="roi-wrap">
     <div class="roi-inner">
-      <span class="roi-label r">Returns</span>
-      <h2 class="roi-title r d1">The math on<br><em>Rutherford.</em></h2>
-
+      <span class="roi-label r">The math on Rutherford</span>
+      <h2 class="roi-title r d1">$277K in.<br><em>$10.5M out.</em></h2>
       <div class="roi-grid">
         <div class="roi-card r d1">
-          <span class="roi-card-label">Year 1 cost</span>
+          <span class="roi-card-lbl">Year 1 cost</span>
           <div class="roi-num muted">$277K</div>
-          <p class="roi-desc">$175K deployment + $102K retainer (12 months at $8.5K). Scales up quarterly as features expand.</p>
+          <p class="roi-desc">$175K deployment + $102K retainer (12 months at $8.5K). Scales quarterly as features expand and value compounds.</p>
         </div>
         <div class="roi-card r d2">
-          <span class="roi-card-label">Year 1 value delivered</span>
+          <span class="roi-card-lbl">Year 1 value delivered</span>
           <div class="roi-num">$10.5M+</div>
-          <p class="roi-desc">Measurable. Excludes compounding viral effects, corridor halo, and the data moat that accrues over time.</p>
+          <p class="roi-desc">Measurable. Excludes compounding viral effects, corridor halo, and the behavioral data moat that grows every month it runs.</p>
         </div>
       </div>
-
       <div class="roi-breakdown">
-        <div class="rb r">
-          <div class="rb-val">$5.7M</div>
-          <div class="rb-lbl">Viral destination traffic — 75 extra visitors/day × $209 avg purchase × 365</div>
-        </div>
-        <div class="rb r d1">
-          <div class="rb-val">$2.9M</div>
-          <div class="rb-lbl">Purchase lift — robot recommends in real time, +15% across 250 daily visitors</div>
-        </div>
-        <div class="rb r d2">
-          <div class="rb-val">$1.6M</div>
-          <div class="rb-lbl">Earned media value — 150+ posts/day × 5K avg views × $15 CPM</div>
-        </div>
-        <div class="rb r d3">
-          <div class="rb-val">$273K</div>
-          <div class="rb-lbl">Private tasting upsells — 5 extra premium bookings/day × $150 avg × 365</div>
-        </div>
+        <div class="rb r"><div class="rb-val">$5.7M</div><div class="rb-lbl">Viral destination traffic — 75 extra visitors/day × $209 avg × 365</div></div>
+        <div class="rb r d1"><div class="rb-val">$2.9M</div><div class="rb-lbl">Purchase lift — real-time recommendations, +15% across 250 daily visitors</div></div>
+        <div class="rb r d2"><div class="rb-val">$1.6M</div><div class="rb-lbl">Earned media — 150+ posts/day × 5K avg views × $15 CPM</div></div>
+        <div class="rb r d3"><div class="rb-val">$273K</div><div class="rb-lbl">Private tasting upsells — 5 extra premium bookings/day × $150 × 365</div></div>
       </div>
     </div>
   </div>
@@ -913,32 +689,31 @@
 <!-- TERRITORY -->
 <section id="territory">
   <div class="page">
-    <div class="section-header">
+    <div class="sec-head">
       <div>
-        <span class="section-label r">Territory</span>
-        <h2 class="section-title r d1">Two valleys.<br><em>First mover wins.</em></h2>
+        <span class="sec-label r">Territory</span>
+        <h2 class="sec-title r d1">Two valleys.<br><em>First mover wins.</em></h2>
       </div>
-      <p class="section-note r d2">Once one property deploys, every winery in that corridor hears about it within a week. The data moat closes.</p>
+      <p class="sec-note r d2">Once one property deploys, every winery in the corridor hears about it within a week. The data moat closes.</p>
     </div>
-
-    <div class="territory-section r">
+    <div class="terr-grid r">
       <div class="terr-panel">
         <span class="terr-tag">Suisun Valley</span>
-        <div class="terr-name">Caymus-Suisun &amp;<br>the Valley Circuit</div>
+        <div class="terr-name">Caymus-Suisun<br>& the Valley Circuit</div>
         <div class="terr-num">$110M–$220M</div>
-        <p class="terr-desc">Annual network revenue. Wagner Family anchor in Suisun Valley — $11–15M tasting room revenue. My father works the property.</p>
+        <p class="terr-desc">Annual network revenue. Wagner Family anchor. My father works the property. The Wagners know our family.</p>
         <ul class="terr-list">
           <li><strong>Caymus-Suisun</strong> — Wagner Family anchor, $11–15M tasting room</li>
-          <li><strong>Mangels Ranch / Suisun Valley Farms</strong> — Randy Bains network</li>
           <li><strong>Vezér Family Vineyard</strong> — 3 locations, weddings, wine club</li>
           <li><strong>Wooden Valley Winery</strong> — 90 years, Lanza family institution</li>
+          <li><strong>Randy Bains / Ryan German</strong> — personal network, opens doors</li>
         </ul>
       </div>
       <div class="terr-panel">
         <span class="terr-tag">Napa Valley — Rutherford</span>
-        <div class="terr-name">Caymus Rutherford<br>&amp; the Corridor</div>
+        <div class="terr-name">Caymus Rutherford<br>& the Corridor</div>
         <div class="terr-num">$304M–$430M+</div>
-        <p class="terr-desc">Annual corridor revenue. Rutherford sits at the center of it — Mondavi, Opus One, Coppola. The Wagners know our family. Same call, different zip code.</p>
+        <p class="terr-desc">Rutherford sits at the center — Mondavi, Opus One, Coppola. Close Caymus and the next call is the same family, higher traffic, same relationship.</p>
         <ul class="terr-list">
           <li><strong>Caymus Rutherford</strong> — $15–25M tasting room, 250+ daily visitors</li>
           <li><strong>Robert Mondavi Winery</strong> — $66–75M, reopening Spring 2026</li>
@@ -948,41 +723,39 @@
       </div>
     </div>
 
-    <!-- Add-ons -->
-    <div class="section-header" style="margin-top: 1rem;">
+    <div class="sec-head" style="margin-top:1rem;">
       <div>
-        <span class="section-label r">Included in every deployment</span>
-        <h2 class="section-title r d1">What ships<br><em>with the robot.</em></h2>
+        <span class="sec-label r">Included in every deployment</span>
+        <h2 class="sec-title r d1">What ships<br><em>with the robot.</em></h2>
       </div>
     </div>
-
     <div class="addon-grid">
       <div class="addon-card r">
         <div class="addon-num">01</div>
-        <div class="addon-content">
+        <div>
           <div class="addon-name">Brand Training Session</div>
-          <div class="addon-desc">Pre-deployment deep dive — your wines, your history, your pricing, your upsell sequences, your family story. The robot knows your operation before it ever talks to a guest.</div>
+          <div class="addon-desc">Pre-deployment deep dive — wines, history, pricing, upsell sequences, family story. The robot knows your operation before it ever says hello.</div>
         </div>
       </div>
       <div class="addon-card r d1">
         <div class="addon-num">02</div>
-        <div class="addon-content">
+        <div>
           <div class="addon-name">Guest Intelligence Dashboard</div>
           <div class="addon-desc">Real-time view of visitor behavior — what they asked, what they hesitated at, what they bought, who came back. Data your team actually uses.</div>
         </div>
       </div>
       <div class="addon-card r d2">
         <div class="addon-num">03</div>
-        <div class="addon-content">
+        <div>
           <div class="addon-name">Content Calendar Output</div>
-          <div class="addon-desc">The robot generates content while it works. Clips, photos, guest moments — delivered in a format your social team can post immediately.</div>
+          <div class="addon-desc">The robot generates content while it works. Clips, photos, guest moments — formatted and ready for your social team to post immediately.</div>
         </div>
       </div>
       <div class="addon-card r d3">
         <div class="addon-num">04</div>
-        <div class="addon-content">
+        <div>
           <div class="addon-name">Monthly Model Updates</div>
-          <div class="addon-desc">The AI gets a meaningful upgrade every month. New capabilities, refined responses, improved upsell timing. Month 12 is not month 1.</div>
+          <div class="addon-desc">A meaningful AI upgrade every month. New capabilities, refined responses, improved upsell timing. Month 12 is not month 1.</div>
         </div>
       </div>
     </div>
@@ -992,18 +765,13 @@
 <!-- FOOTER -->
 <footer>
   <p class="footer-note"><strong>JP — Napa & Suisun Valley territory.</strong> This catalog is confidential. Pricing and availability subject to agreement.</p>
-  <span class="footer-label">The Machine · 2026 · Confidential</span>
+  <span class="footer-lbl">The Machine · 2026 · Confidential</span>
 </footer>
 
 <script>
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
   document.querySelectorAll('.r').forEach(el => obs.observe(el));
 </script>
 </body>
