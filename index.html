@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partnership Proposal — JP × [Name]</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:         #0d0a06;
+      --bg-2:       #110e08;
+      --gold:       #b48c50;
+      --gold-dim:   #7a6a52;
+      --gold-faint: #5a4e3a;
+      --text:       #f5f0e8;
+      --text-2:     #c8bba8;
+      --text-3:     #a89070;
+      --border:     rgba(255,250,240,0.07);
+      --border-2:   rgba(255,250,240,0.12);
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'Inter', -apple-system, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+    .r { opacity:0; transform:translateY(20px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .r.visible { opacity:1; transform:translateY(0); }
+    .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s} .d4{transition-delay:.4s}
+
+    .page { max-width: 900px; margin: 0 auto; padding: 0 clamp(1.5rem,5vw,5rem); }
+    .section { padding: clamp(3.5rem,7vh,6rem) 0; }
+    hr { border: none; border-top: 1px solid var(--border); }
+
+    .label { font-family: var(--serif); font-size: 0.68rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold-faint); display: block; margin-bottom: 1.25rem; }
+    .display { font-family: var(--serif); font-size: clamp(2.8rem,8vw,7rem); font-weight: 600; line-height: 0.88; letter-spacing: -0.025em; color: var(--text); }
+    .display-sm { font-family: var(--serif); font-size: clamp(1.8rem,4vw,3.25rem); font-weight: 600; line-height: 0.93; letter-spacing: -0.02em; color: var(--text); }
+    .goldi { color: var(--gold); font-style: italic; }
+    .body { font-size: 0.92rem; color: var(--text-3); line-height: 1.8; font-weight: 300; }
+
+    /* Cover */
+    #cover {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: clamp(2.5rem,5vh,4rem) clamp(1.5rem,5vw,5rem);
+      position: relative; overflow: hidden;
+    }
+    .glow { position: absolute; border-radius: 50%; pointer-events: none; }
+    .g1 { width:700px; height:700px; top:-10%; right:-10%; background: radial-gradient(circle, rgba(180,140,80,0.07) 0%, transparent 60%); }
+    .g2 { width:500px; height:500px; bottom:-10%; left:-5%; background: radial-gradient(circle, rgba(140,80,30,0.04) 0%, transparent 65%); }
+    .cover-bar { display:flex; justify-content:space-between; align-items:flex-start; }
+    .cover-bar span { font-family:var(--serif); font-size:0.68rem; letter-spacing:0.45em; text-transform:uppercase; color:var(--gold-faint); }
+    .cover-bottom { display:flex; flex-direction:column; gap:2.5rem; }
+    .cover-rule { height:1px; background:linear-gradient(to right, var(--gold), transparent); width:100px; margin-bottom:0.5rem; }
+
+    /* Two-col layout */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+    @media(max-width:620px){ .two-col{ grid-template-columns:1fr; } }
+
+    /* Cards */
+    .card { border:1px solid var(--border); border-radius:3px; padding:2.25rem; background:var(--bg-2); display:flex; flex-direction:column; gap:0.85rem; }
+    .card.accent { border-color:rgba(180,140,80,0.3); background:rgba(180,140,80,0.03); }
+    .card-label { font-family:var(--serif); font-size:0.65rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold-faint); }
+    .card-title { font-family:var(--serif); font-size:1.3rem; font-weight:600; color:var(--text); line-height:1.15; }
+    .card-body { font-size:0.83rem; color:var(--text-3); line-height:1.75; }
+    .card-body strong { color:var(--text-2); }
+
+    /* List items */
+    .item-list { display:flex; flex-direction:column; gap:0; }
+    .item { display:grid; grid-template-columns:1fr auto; align-items:baseline; padding:1.1rem 0; border-bottom:1px solid var(--border); gap:1rem; }
+    .item:first-child { border-top:1px solid var(--border); }
+    .item-name { font-size:0.88rem; color:var(--text-2); line-height:1.5; }
+    .item-name span { display:block; font-size:0.75rem; color:var(--gold-faint); margin-top:0.2rem; font-weight:300; }
+    .item-val { font-family:var(--serif); font-size:1rem; color:var(--gold); font-weight:600; white-space:nowrap; text-align:right; }
+
+    /* Commission ladder */
+    .ladder { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:3px; overflow:hidden; }
+    @media(max-width:550px){ .ladder{ grid-template-columns:1fr; } }
+    .rung { background:var(--bg-2); padding:2rem 1.75rem; display:flex; flex-direction:column; gap:0.6rem; }
+    .rung.active { background:rgba(180,140,80,0.04); border-bottom:2px solid rgba(180,140,80,0.25); }
+    .rung-label { font-family:var(--serif); font-size:0.62rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold-faint); }
+    .rung-rate { font-family:var(--serif); font-size:2.25rem; font-weight:700; color:var(--gold); line-height:1; letter-spacing:-0.04em; }
+    .rung-desc { font-size:0.74rem; color:var(--gold-dim); line-height:1.55; }
+    .rung-math { font-size:0.73rem; color:var(--text-3); margin-top:0.25rem; font-style:italic; }
+
+    /* Access block */
+    .access-block { border:1px solid rgba(180,140,80,0.3); border-radius:3px; padding:2.5rem; background:rgba(180,140,80,0.03); }
+    .access-block p { font-size:0.9rem; color:var(--text-2); line-height:1.8; }
+    .access-block strong { color:var(--text); }
+
+    /* The ask */
+    .ask-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:3px; overflow:hidden; }
+    @media(max-width:580px){ .ask-grid{ grid-template-columns:1fr; } }
+    .ask-cell { background:var(--bg-2); padding:2rem 1.75rem; display:flex; flex-direction:column; gap:0.6rem; }
+    .ask-num { font-family:var(--serif); font-size:0.62rem; letter-spacing:0.4em; color:var(--gold-faint); }
+    .ask-title { font-family:var(--serif); font-size:1.15rem; font-weight:600; color:var(--text); line-height:1.2; }
+    .ask-desc { font-size:0.78rem; color:var(--gold-dim); line-height:1.65; }
+
+    /* Closing */
+    #closing { text-align:center; padding:clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem); position:relative; }
+    .cg { position:absolute; top:15%; left:50%; transform:translateX(-50%); width:600px; height:600px; background:radial-gradient(circle, rgba(180,140,80,0.05) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+  </style>
+</head>
+<body>
+
+<!-- COVER -->
+<section id="cover">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="cover-bar">
+    <span>Partnership Proposal — Confidential</span>
+    <span>February 2026</span>
+  </div>
+  <div class="cover-bottom">
+    <div>
+      <div class="cover-rule"></div>
+      <h1 class="display">
+        Here's<br>
+        <em class="goldi">the deal.</em>
+      </h1>
+    </div>
+    <p class="body" style="max-width:520px;">
+      You built the robot. I have the room.
+      Not a warm intro — the vineyard manager at Caymus is my father,
+      and Chuck and Charlie Wagner know our family personally.
+      This is a proposal to formalize what that access is worth,
+      and how we split what we close together.
+    </p>
+  </div>
+</section>
+
+<hr />
+
+<!-- THE ACCESS -->
+<div class="page">
+  <section class="section">
+    <span class="label r">What I Bring</span>
+    <h2 class="display-sm r d1" style="margin-bottom:2rem;">
+      The access.<br><em class="goldi">What you can't buy.</em>
+    </h2>
+
+    <div class="access-block r" style="margin-bottom:1.25rem;">
+      <p>
+        <strong>My father is the vineyard manager at Caymus.</strong>
+        Chuck Wagner knows him. Charlie Wagner knows him.
+        This is not a cold call. This is not a warm intro through someone who knows someone.
+        This is a conversation that starts with trust already in the room —
+        because our family has earned it working their land.
+        That relationship is the difference between a pitch that gets a meeting
+        and a pitch that gets a deal.
+      </p>
+    </div>
+
+    <div class="item-list r" style="margin-bottom:1.25rem;">
+      <div class="item">
+        <div class="item-name">
+          Chuck Wagner — Caymus Vineyards Founder
+          <span>Personal relationship through family. Founding generation. Final word on any major deployment.</span>
+        </div>
+        <div class="item-val">Direct access</div>
+      </div>
+      <div class="item">
+        <div class="item-name">
+          Charlie Wagner — Caymus-Suisun, Napa Valley Car Club Co-Founder
+          <span>Second generation. Runs Suisun operations and co-founded NVCC. Primary target contact for the first deployment.</span>
+        </div>
+        <div class="item-val">Direct access</div>
+      </div>
+      <div class="item">
+        <div class="item-name">
+          Randy Bains
+          <span>Close personal network. Suisun Valley and surrounding area. Opens doors the Wagners don't manage directly.</span>
+        </div>
+        <div class="item-val">Warm</div>
+      </div>
+      <div class="item">
+        <div class="item-name">
+          Ryan German
+          <span>Connected across the valley and beyond. Turns a deployment into a valley-wide conversation within days.</span>
+        </div>
+        <div class="item-val">Warm</div>
+      </div>
+      <div class="item">
+        <div class="item-name">
+          Napa Valley Car Club Network
+          <span>Through the Wagner connection — NVCC members are UHNW individuals who write $20K checks for track days. One sighting becomes word of mouth at the highest level in Northern California.</span>
+        </div>
+        <div class="item-val">Network effect</div>
+      </div>
+    </div>
+
+    <div class="two-col r">
+      <div class="card">
+        <div class="card-label">Also in the room</div>
+        <div class="card-title">I know how these people think.</div>
+        <p class="card-body">
+          Wine country buyers don't respond to decks — they respond to people they trust
+          talking to people they trust. I understand the culture, the pace, and the
+          language of this market in a way that doesn't come from research.
+          I grew up in it.
+        </p>
+      </div>
+      <div class="card accent">
+        <div class="card-label">The close</div>
+        <div class="card-title">I handle the entire sales cycle.</div>
+        <p class="card-body">
+          Intro, pitch, follow-up, negotiation, close.
+          You don't touch the client relationship until the contract is signed.
+          Once it's running, I stay as the account manager —
+          you focus on the product. I focus on the people.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<hr />
+
+<!-- WHAT YOU BRING -->
+<div class="page">
+  <section class="section">
+    <span class="label r">What You Bring</span>
+    <h2 class="display-sm r d1" style="margin-bottom:2rem;">
+      The product.<br><em class="goldi">What I can't replicate.</em>
+    </h2>
+
+    <div class="item-list r">
+      <div class="item">
+        <div class="item-name">
+          The robot itself
+          <span>Physical AI — sees, hears, speaks, moves, remembers. Nothing else on the market does all of this in one unit.</span>
+        </div>
+        <div class="item-val">The asset</div>
+      </div>
+      <div class="item">
+        <div class="item-name">
+          Deployment + setup
+          <span>Full installation, brand training, custom configuration. Operational from day one.</span>
+        </div>
+        <div class="item-val">Execution</div>
+      </div>
+      <div class="item">
+        <div class="item-name">
+          Ongoing updates
+          <span>New capabilities ship every month. The robot in month 12 is not the robot that arrived on day one. This is the product moat.</span>
+        </div>
+        <div class="item-val">Compounding</div>
+      </div>
+      <div class="item">
+        <div class="item-name">
+          Proof of deployment
+          <span>Westin, Marriott — real venues, real deployments, real footage. This is what a cold lead needs to see before the numbers mean anything.</span>
+        </div>
+        <div class="item-val">The anchor</div>
+      </div>
+      <div class="item">
+        <div class="item-name">
+          Technical credibility
+          <span>When the client asks "is this real?" — your track record is the answer. $50–70K deployments at major hotel brands is the proof point that makes a $175K permanent deployment feel reasonable, not insane.</span>
+        </div>
+        <div class="item-val">Trust builder</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<hr />
+
+<!-- DEAL STRUCTURE -->
+<div class="page">
+  <section class="section">
+    <span class="label r">The Structure</span>
+    <h2 class="display-sm r d1" style="margin-bottom:1rem;">
+      How we split it.<br><em class="goldi">Starting low. Scaling with results.</em>
+    </h2>
+    <p class="body r d2" style="max-width:580px;margin-bottom:3rem;">
+      Simple and clean. I bring it in, I own the client relationship, I manage the account.
+      Twenty percent of everything I close — setup and monthly — for the life of that account.
+      No escalation. No fine print. We both know what the deal is from day one.
+    </p>
+
+    <div class="ladder r" style="margin-bottom:1.5rem;">
+      <div class="rung active" style="border-bottom:2px solid rgba(180,140,80,0.35);">
+        <span class="rung-label">Single robot — entry price</span>
+        <div class="rung-rate">$100K</div>
+        <p class="rung-desc">The opener. Gets a yes faster. Gets the robot in the room. Once they see it working, the conversation about a second unit is easy.</p>
+        <p class="rung-math">My 20% on setup: $20K · My 20% of $5K/mo: $1K/mo</p>
+      </div>
+      <div class="rung">
+        <span class="rung-label">Two robots — upsell</span>
+        <div class="rung-rate">$175K</div>
+        <p class="rung-desc">Once they've seen deal one work, close the expansion. Same client, bigger contract, the relationship is already warm.</p>
+        <p class="rung-math">My 20% on setup: $35K · My 20% of $8.5K/mo: $1.7K/mo</p>
+      </div>
+      <div class="rung">
+        <span class="rung-label">Future deployments</span>
+        <div class="rung-rate">↑</div>
+        <p class="rung-desc">As more properties deploy and word spreads, the entry price goes up. Early clients set the proof. Later clients pay the premium. My 20% scales with it.</p>
+        <p class="rung-math">First mover discount for the client. Later movers pay market rate.</p>
+      </div>
+    </div>
+
+    <div class="two-col r">
+      <div class="card">
+        <div class="card-label">Territory</div>
+        <div class="card-title">Napa &amp; Suisun Valley — mine.</div>
+        <p class="card-body">
+          I'm proposing exclusive rights to close deals in the Napa Valley and
+          Suisun Valley wine country corridor for 12 months.
+          Any deployment I bring in this territory falls under this structure.
+          After 12 months, we renegotiate based on what's been built.
+        </p>
+      </div>
+      <div class="card accent">
+        <div class="card-label">The monthly retainer logic</div>
+        <div class="card-title">My cut scales with yours.</div>
+        <p class="card-body">
+          As the monthly retainer scales up quarter by quarter —
+          new features, new value, higher rate —
+          my percentage applies to the new number.
+          We both grow together. No conflict of interest.
+          I'm incentivized to keep the client happy and the retainer climbing.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<hr />
+
+<!-- THE FIRST TARGET -->
+<div class="page">
+  <section class="section">
+    <span class="label r">The First Deal</span>
+    <h2 class="display-sm r d1" style="margin-bottom:2rem;">
+      Caymus-Suisun.<br><em class="goldi">The one we close first.</em>
+    </h2>
+
+    <div style="border:1px solid var(--border);border-radius:3px;overflow:hidden;" class="r">
+      <div style="padding:2rem 2.5rem;background:var(--bg-2);border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;">
+        <div>
+          <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--text);letter-spacing:-0.01em;">Caymus-Suisun</div>
+          <div style="font-size:0.7rem;letter-spacing:0.2em;color:var(--gold-faint);margin-top:0.25rem;font-family:var(--serif);">Wagner Family of Wine · Suisun Valley, CA</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--gold);letter-spacing:-0.03em;">$11–15M / yr</div>
+          <div style="font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-faint);">Est. Tasting Room Revenue</div>
+        </div>
+      </div>
+      <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;gap:1.25rem;">
+        <p style="font-size:0.88rem;color:var(--text-3);line-height:1.75;">
+          The Wagner Family anchor in Suisun Valley. The most recognized wine brand in the region.
+          My father works this property. Chuck and Charlie Wagner know our family.
+          This is the first call I make — and it's not a cold one.
+        </p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:3px;overflow:hidden;">
+          <div style="background:var(--bg);padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.4rem;">
+            <div style="font-family:var(--serif);font-size:0.62rem;letter-spacing:0.35em;color:var(--gold-faint);text-transform:uppercase;">Opening Offer — One Robot</div>
+            <div style="font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--text);">$100K setup · $5K/mo</div>
+            <div style="font-size:0.78rem;color:var(--gold-dim);">Low enough to get a yes. High enough to be real. Upsell to two once it's running.</div>
+          </div>
+          <div style="background:var(--bg);padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.4rem;">
+            <div style="font-family:var(--serif);font-size:0.62rem;letter-spacing:0.35em;color:var(--gold-faint);text-transform:uppercase;">Expansion — Two Robots</div>
+            <div style="font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--gold);">$175K setup · $8.5K/mo</div>
+            <div style="font-size:0.78rem;color:var(--gold-dim);">Same family, same conversation. One robot proves it. Two robots scales it.</div>
+          </div>
+        </div>
+        <p style="font-size:0.83rem;color:var(--text-3);line-height:1.75;">
+          Close Caymus-Suisun and the Rutherford property is the next conversation — same family, same access, higher foot traffic, ~38x ROI.
+          One relationship. Two deployments. Then the Wagner portfolio beyond that.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<hr />
+
+<!-- WHAT I NEED FROM YOU -->
+<div class="page">
+  <section class="section">
+    <span class="label r">What I Need From You</span>
+    <h2 class="display-sm r d1" style="margin-bottom:2rem;">
+      Three things.<br><em class="goldi">To make this real.</em>
+    </h2>
+
+    <div class="ask-grid r" style="margin-bottom:1.5rem;">
+      <div class="ask-cell">
+        <span class="ask-num">01</span>
+        <div class="ask-title">Proof footage.</div>
+        <p class="ask-desc">
+          One video. 60 seconds. The robot in action at a real venue —
+          Westin, Marriott, convention, anything with a real crowd.
+          A cold buyer needs to see it exist before any ROI number lands.
+          Without this, I'm selling a concept. With it, I'm selling a product.
+        </p>
+      </div>
+      <div class="ask-cell">
+        <span class="ask-num">02</span>
+        <div class="ask-title">Availability for a live demo.</div>
+        <p class="ask-desc">
+          When I get the meeting — and I will get the meeting —
+          I need to know you can be there or get the robot there.
+          The close happens in person, in the room, not over a document.
+          What's your lead time for a demo deployment in Napa/Suisun?
+        </p>
+      </div>
+      <div class="ask-cell">
+        <span class="ask-num">03</span>
+        <div class="ask-title">A yes or no on this structure.</div>
+        <p class="ask-desc">
+          I'm not asking you to trust me blindly.
+          I'm asking you to agree to terms that protect you (low rate on deal one)
+          and reward me as I deliver (escalating rate as deals close).
+          If the structure doesn't work, tell me what does.
+          Let's have the conversation.
+        </p>
+      </div>
+      <div class="ask-cell">
+        <span class="ask-num">04</span>
+        <div class="ask-title">Pricing confirmation.</div>
+        <p class="ask-desc">
+          I've been pitching $175K setup + $8.5K/month starting.
+          Confirm this is the right anchor number for a permanent two-robot deployment
+          so I'm not overpromising or underpricing when I'm in the room.
+        </p>
+      </div>
+    </div>
+
+    <div style="padding:2rem 2.5rem;border:1px solid rgba(180,140,80,0.3);border-radius:3px;background:rgba(180,140,80,0.03);" class="r">
+      <p style="font-size:0.92rem;color:var(--text-2);line-height:1.8;">
+        <strong style="color:var(--text);">The timing is now.</strong>
+        Robert Mondavi Winery reopens Spring 2026. The press cycle around Rutherford and Oakville
+        starts within weeks. If there is ever a moment to be the robot story in Napa Valley,
+        this is it — and it closes with one phone call to a family that already trusts us.
+        Every week we wait is a week someone else could move first.
+      </p>
+    </div>
+  </section>
+</div>
+
+<hr />
+
+<!-- CLOSING -->
+<section id="closing">
+  <div class="cg"></div>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:2rem;">
+    <span class="label r">The Bottom Line</span>
+    <h2 class="display r d1" style="max-width:700px;text-align:center;">
+      You built it.<br>
+      <em class="goldi">I can sell it.</em>
+    </h2>
+    <p class="body r d2" style="max-width:460px;text-align:center;">
+      The robot is real. The market is right.
+      The access is there — it's been there my whole life.
+      The only thing left is agreeing to move together.
+    </p>
+    <div style="height:1px;width:80px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:0.5rem 0;" class="r d3"></div>
+    <p class="r d4" style="font-family:var(--serif);font-size:0.68rem;letter-spacing:0.45em;text-transform:uppercase;color:var(--gold-faint);">Confidential — JP × [Name]</p>
+  </div>
+</section>
+
+<script>
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.07 }
+  );
+  document.querySelectorAll('.r').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
