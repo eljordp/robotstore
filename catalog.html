@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Robot — Deployment Catalog</title>
+  <title>The Robot — Configure Your Deployment</title>
   <meta name="robots" content="noindex, nofollow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,6 +32,12 @@
       --serif:     'Cormorant Garamond', Georgia, serif;
       --sans:      'Inter', -apple-system, sans-serif;
       --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+      --green:     #3a7a4a;
+      --green-lt:  #e8f5e9;
+      --blue:      #3a5a7a;
+      --blue-lt:   #e8f0f5;
+      --orange:    #7a5a3a;
+      --orange-lt: #f5f0e8;
     }
 
     html { scroll-behavior: smooth; }
@@ -44,11 +50,7 @@
     }
 
     /* ── Reveal ── */
-    .r {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
-    }
+    .r { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
     .r.visible { opacity: 1; transform: translateY(0); }
     .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s}
     .d4{transition-delay:.32s} .d5{transition-delay:.40s} .d6{transition-delay:.48s}
@@ -74,189 +76,153 @@
     @media(max-width:560px){ .nav-links{ display:none; } }
 
     /* ── Hero ── */
-    #hero { padding: clamp(5rem,12vh,9rem) 0 clamp(4rem,8vh,7rem); border-bottom: 1px solid var(--border); }
+    #hero {
+      padding: clamp(5rem,12vh,9rem) 0 clamp(4rem,8vh,7rem);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    @media(max-width:768px){ .hero-layout{ grid-template-columns:1fr; gap:2rem; text-align:center; } }
     .hero-eyebrow { font-family: var(--serif); font-size: 0.68rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 2rem; }
-    .hero-title { font-family: var(--serif); font-size: clamp(3.5rem,9vw,8rem); font-weight: 600; line-height: 0.88; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 2.5rem; }
+    .hero-title { font-family: var(--serif); font-size: clamp(3.5rem,8vw,7rem); font-weight: 600; line-height: 0.88; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 1.5rem; }
     .hero-title em { color: var(--gold); font-style: italic; }
-    .hero-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; }
-    @media(max-width:680px){ .hero-row{ grid-template-columns:1fr; gap:2rem; } }
-    .hero-desc { font-size: 0.9rem; color: var(--ink-3); line-height: 1.85; font-weight: 300; max-width: 440px; }
-    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .hs { border-top: 1px solid var(--border-2); padding-top: 1.25rem; display: flex; flex-direction: column; gap: 0.2rem; }
-    .hs-val { font-family: var(--serif); font-size: clamp(1.6rem,3vw,2.4rem); font-weight: 700; color: var(--gold); line-height: 1; letter-spacing: -0.03em; }
-    .hs-lbl { font-size: 0.68rem; color: var(--ink-4); line-height: 1.5; margin-top: 0.15rem; }
+    .hero-desc { font-size: 0.95rem; color: var(--ink-3); line-height: 1.85; font-weight: 300; max-width: 440px; margin-bottom: 2.5rem; }
+    @media(max-width:768px){ .hero-desc{ margin: 0 auto 2.5rem; } }
+    .hero-price { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    @media(max-width:768px){ .hero-price{ justify-content:center; } }
+    .hero-price-main { font-family: var(--serif); font-size: clamp(2.5rem,5vw,4rem); font-weight: 700; color: var(--gold); letter-spacing: -0.04em; line-height: 1; }
+    .hero-price-sub { font-size: 0.78rem; color: var(--ink-4); }
+    .hero-visual {
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px;
+      aspect-ratio: 1/1; max-height: 480px;
+      position: relative; overflow: hidden;
+    }
+    .hero-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 28px 28px; opacity: 0.5;
+    }
+    .hero-visual svg { position: relative; z-index: 1; }
+    .hero-stats { display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; }
+    @media(max-width:768px){ .hero-stats{ justify-content:center; } }
+    .hs { border-left: 2px solid var(--gold-faint); padding-left: 1rem; }
+    .hs-val { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .hs-lbl { font-size: 0.65rem; color: var(--ink-4); margin-top: 0.2rem; }
 
-    /* ── Section header ── */
-    .sec-head { padding: clamp(3.5rem,7vh,6rem) 0 2.5rem; border-top: 1px solid var(--border); display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    /* ── Section ── */
+    .sec-head { padding: clamp(3.5rem,7vh,6rem) 0 2.5rem; border-top: 1px solid var(--border); }
     .sec-label { font-family: var(--serif); font-size: 0.68rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--ink-4); display: block; margin-bottom: 0.75rem; }
     .sec-title { font-family: var(--serif); font-size: clamp(2rem,4.5vw,3.5rem); font-weight: 600; line-height: 0.93; letter-spacing: -0.02em; color: var(--ink); }
     .sec-title em { color: var(--gold); font-style: italic; }
-    .sec-note { font-size: 0.78rem; color: var(--ink-4); line-height: 1.6; max-width: 260px; text-align: right; }
-    @media(max-width:580px){ .sec-note{ display:none; } }
+    .sec-subtitle { font-size: 0.85rem; color: var(--ink-4); line-height: 1.7; max-width: 520px; margin-top: 1rem; }
 
-    /* ═══════════════════════════════════════
-       ROBOT CARDS
-    ═══════════════════════════════════════ */
-    .robots-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: visible;
-      margin-bottom: clamp(3rem,6vh,5rem);
-    }
-    @media(max-width:900px){ .robots-grid{ grid-template-columns: repeat(2,1fr); } }
-    @media(max-width:520px){ .robots-grid{ grid-template-columns: 1fr; } }
-
-    .robot-card {
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      cursor: default;
-      position: relative;
-      transition: background 0.4s var(--ease), transform 0.4s var(--ease), box-shadow 0.4s var(--ease), z-index 0s;
-      overflow: hidden;
-    }
-    .robot-card:first-child { border-radius: 5px 0 0 5px; }
-    .robot-card:last-child  { border-radius: 0 5px 5px 0; }
-    @media(max-width:900px){
-      .robot-card:nth-child(1){ border-radius:5px 0 0 0; }
-      .robot-card:nth-child(2){ border-radius:0 5px 0 0; }
-      .robot-card:nth-child(3){ border-radius:0 0 0 5px; }
-      .robot-card:nth-child(4){ border-radius:0 0 5px 0; }
-    }
-    .robot-card:hover {
-      background: #fff;
-      transform: translateY(-8px) scale(1.01);
-      box-shadow: var(--shadow-lg);
-      z-index: 10;
-    }
-    .robot-card.featured {
+    /* ── Sticky Price Bar ── */
+    .price-bar {
+      position: sticky; top: 58px; z-index: 90;
       background: var(--ink);
+      border-bottom: 1px solid rgba(255,250,240,0.07);
+      padding: 0.85rem clamp(1.25rem,4vw,4rem);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem; flex-wrap: wrap;
+      opacity: 0; transform: translateY(-100%);
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
     }
-    .robot-card.featured:hover {
-      background: #231f18;
-      transform: translateY(-8px) scale(1.01);
-      box-shadow: 0 24px 64px rgba(26,22,18,0.25), 0 8px 24px rgba(26,22,18,0.15);
+    .price-bar.visible { opacity: 1; transform: translateY(0); }
+    .price-bar-label { font-family: var(--serif); font-size: 0.62rem; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+    .price-bar-row { display: flex; align-items: baseline; gap: 2rem; flex-wrap: wrap; }
+    .price-bar-val { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--gold-lt); letter-spacing: -0.03em; }
+    .price-bar-val span { font-size: 0.72rem; font-weight: 400; color: rgba(245,240,232,0.4); letter-spacing: 0; margin-left: 0.3rem; }
+    .price-bar-cta {
+      padding: 0.55rem 1.5rem; background: var(--gold); border: none; border-radius: 2px;
+      font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #fff; cursor: pointer; text-decoration: none; transition: background 0.2s;
+    }
+    .price-bar-cta:hover { background: var(--gold-mid); }
+
+    /* ── Configurator Cards ── */
+    .config-group-label {
+      font-family: var(--serif); font-size: 0.62rem; letter-spacing: 0.45em;
+      text-transform: uppercase; color: var(--ink-4); margin-bottom: 1rem; margin-top: 2rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .config-group-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .config-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 1rem; }
+    @media(max-width:640px){ .config-grid{ grid-template-columns:1fr; } }
+
+    .config-card {
+      background: var(--bg); padding: 1.5rem 1.75rem; cursor: pointer;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      position: relative; user-select: none;
+    }
+    .config-card:hover { background: #fff; }
+    .config-card.selected { background: #fff; box-shadow: inset 0 0 0 2px var(--gold); z-index: 2; }
+    .config-card.included { background: var(--gold-ghost); cursor: default; }
+    .config-card.included::after {
+      content: 'INCLUDED'; position: absolute; top: 1.25rem; right: 1.5rem;
+      font-family: var(--serif); font-size: 0.55rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.7;
     }
 
-    /* Robot visual area */
-    .robot-visual {
-      width: 100%;
-      aspect-ratio: 4/3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-2);
-      border-bottom: 1px solid var(--border);
-      padding: 1.5rem;
-      transition: background 0.4s var(--ease);
-      position: relative;
-      overflow: hidden;
+    .config-card-head { display: flex; align-items: center; gap: 0.75rem; }
+    .config-check {
+      width: 22px; height: 22px; border: 1.5px solid var(--border-2); border-radius: 3px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: all 0.2s var(--ease);
     }
-    .robot-card:hover .robot-visual { background: #f0ede8; }
-    .robot-card.featured .robot-visual { background: #110e08; border-bottom-color: rgba(255,250,240,0.07); }
-    .robot-card.featured:hover .robot-visual { background: #160f08; }
-
-    /* Subtle grid lines in visual */
-    .robot-visual::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 24px 24px;
-      opacity: 0.5;
+    .config-card.selected .config-check,
+    .config-card.included .config-check {
+      background: var(--gold); border-color: var(--gold);
     }
-    .robot-card.featured .robot-visual::before { background-image: linear-gradient(rgba(255,250,240,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,250,240,0.04) 1px, transparent 1px); }
+    .config-check svg { width: 12px; height: 12px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity 0.2s; }
+    .config-card.selected .config-check svg,
+    .config-card.included .config-check svg { opacity: 1; }
 
-    .robot-svg {
-      position: relative;
-      z-index: 1;
-      transition: transform 0.5s var(--ease);
+    .config-name { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); line-height: 1.15; }
+    .config-price-tag { font-family: var(--serif); font-size: 0.78rem; color: var(--gold); font-weight: 600; margin-left: auto; white-space: nowrap; }
+    .config-card.included .config-price-tag { color: var(--ink-4); }
+
+    .config-tag {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500;
+      padding: 0.2rem 0.6rem; border-radius: 2px; width: fit-content;
     }
-    .robot-card:hover .robot-svg { transform: translateY(-4px); }
+    .config-tag.revenue { background: var(--green-lt); color: var(--green); }
+    .config-tag.attention { background: var(--blue-lt); color: var(--blue); }
+    .config-tag.time { background: var(--orange-lt); color: var(--orange); }
+    .config-tag.scale { background: var(--gold-ghost); color: var(--gold); }
 
-    /* Body content */
-    .robot-body { padding: 1.75rem 1.75rem 1.5rem; display: flex; flex-direction: column; gap: 0; flex: 1; }
-
-    .robot-badge {
-      font-family: var(--serif);
-      font-size: 0.58rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-      display: flex; align-items: center; gap: 0.5rem;
+    .config-desc {
+      font-size: 0.74rem; color: var(--ink-4); line-height: 1.65;
+      max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease), margin 0.3s var(--ease);
+      margin-top: 0;
     }
-    .robot-badge::before { content: ''; display: block; width: 16px; height: 1px; background: var(--gold); flex-shrink: 0; }
-    .featured .robot-badge { color: rgba(212,176,122,0.8); }
-    .featured .robot-badge::before { background: rgba(212,176,122,0.5); }
-
-    .robot-name {
-      font-family: var(--serif);
-      font-size: 1.35rem;
-      font-weight: 600;
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: 0.2rem;
+    .config-card.selected .config-desc,
+    .config-card.included .config-desc,
+    .config-card:hover .config-desc {
+      max-height: 120px; margin-top: 0.35rem;
     }
-    .featured .robot-name { color: #f5f0e8; }
 
-    .robot-tagline { font-size: 0.7rem; color: var(--ink-4); line-height: 1.5; margin-bottom: 1.5rem; }
-    .featured .robot-tagline { color: rgba(245,240,232,0.4); }
+    /* ── Second Robot Card (full width) ── */
+    .config-grid-full { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 2rem; }
+    .config-card.second-robot { flex-direction: row; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .config-card.second-robot .config-desc { flex-basis: 100%; }
 
-    .robot-price {
-      font-family: var(--serif);
-      font-size: clamp(2.2rem,4vw,3.2rem);
-      font-weight: 700;
-      color: var(--gold);
-      line-height: 1;
-      letter-spacing: -0.04em;
+    /* ── Roadmap ── */
+    .roadmap-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: clamp(3rem,6vh,5rem); }
+    @media(max-width:700px){ .roadmap-grid{ grid-template-columns:1fr; } }
+    .roadmap-card {
+      background: var(--bg); padding: 2.25rem 2rem; display: flex; flex-direction: column; gap: 0.85rem;
+      transition: background 0.3s var(--ease); cursor: default;
     }
-    .featured .robot-price { color: var(--gold-lt); }
-
-    .robot-price-sub { font-size: 0.69rem; color: var(--ink-4); line-height: 1.5; margin-top: 0.3rem; margin-bottom: 1.5rem; }
-    .featured .robot-price-sub { color: rgba(245,240,232,0.35); }
-
-    .robot-divider { height: 1px; background: var(--border); margin-bottom: 1.25rem; }
-    .featured .robot-divider { background: rgba(255,250,240,0.08); }
-
-    .robot-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; flex: 1; }
-    .robot-features li { font-size: 0.74rem; color: var(--ink-3); line-height: 1.5; display: flex; align-items: flex-start; gap: 0.55rem; }
-    .featured .robot-features li { color: rgba(245,240,232,0.55); }
-    .robot-features li::before { content: '✓'; font-size: 0.62rem; color: var(--gold); margin-top: 0.1rem; flex-shrink: 0; font-weight: 600; }
-    .featured .robot-features li::before { color: var(--gold-lt); }
-
-    .robot-cta {
-      display: block; margin-top: 1.75rem;
-      padding: 0.8rem 1.25rem;
-      border: 1px solid var(--border-2); border-radius: 2px;
-      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--ink-3); background: transparent;
-      text-align: center; text-decoration: none; font-family: var(--sans);
-      transition: all 0.25s var(--ease);
-    }
-    .robot-cta:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
-    .featured .robot-cta { border-color: rgba(255,250,240,0.15); color: rgba(245,240,232,0.55); }
-    .featured .robot-cta:hover { background: var(--gold-mid); border-color: var(--gold-mid); color: #fff; }
-
-    /* ── Capabilities grid ── */
-    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: clamp(3rem,6vh,5rem); }
-    @media(max-width:780px){ .feat-grid{ grid-template-columns: repeat(2,1fr); } }
-    @media(max-width:440px){ .feat-grid{ grid-template-columns: 1fr; } }
-
-    .feat-card { background: var(--bg); padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; cursor: default; transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
-    .feat-card:hover { background: #fff; transform: translateY(-3px); box-shadow: var(--shadow-md); z-index: 2; position: relative; }
-    .feat-icon { width: 36px; height: 36px; border: 1px solid var(--gold-faint); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.25rem; transition: border-color 0.3s, background 0.3s; }
-    .feat-card:hover .feat-icon { border-color: var(--gold); background: var(--gold-faint); }
-    .feat-icon svg { width: 15px; height: 15px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .feat-name { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--ink); line-height: 1.15; }
-    .feat-desc { font-size: 0.75rem; color: var(--ink-4); line-height: 1.7; }
-    .feat-tag { font-family: var(--serif); font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-top: auto; padding-top: 0.5rem; }
+    .roadmap-card:hover { background: #fff; }
+    .roadmap-month { font-family: var(--serif); font-size: 0.6rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); }
+    .roadmap-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); line-height: 1.15; }
+    .roadmap-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .roadmap-list li { font-size: 0.74rem; color: var(--ink-3); line-height: 1.55; display: flex; align-items: flex-start; gap: 0.5rem; }
+    .roadmap-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold-faint); margin-top: 0.35rem; flex-shrink: 0; }
+    .roadmap-card:nth-child(2) .roadmap-list li::before { background: var(--gold-lt); }
+    .roadmap-card:nth-child(3) .roadmap-list li::before { background: var(--gold); }
 
     /* ── ROI (dark) ── */
     .roi-wrap { background: var(--ink); padding: clamp(3.5rem,7vh,6rem) clamp(1.25rem,4vw,4rem); position: relative; overflow: hidden; }
@@ -280,30 +246,111 @@
     .rb-val { font-family:var(--serif); font-size:clamp(1.5rem,2.5vw,2rem); font-weight:700; color:var(--gold-lt); line-height:1; letter-spacing:-0.03em; }
     .rb-lbl { font-size:0.68rem; color:rgba(245,240,232,0.33); line-height:1.5; margin-top:0.2rem; }
 
-    /* ── Territory ── */
-    .terr-grid { border:1px solid var(--border); border-radius:4px; overflow:hidden; display:grid; grid-template-columns:1fr 1fr; margin-bottom:clamp(3rem,6vh,5rem); }
-    @media(max-width:640px){ .terr-grid{ grid-template-columns:1fr; } }
-    .terr-panel { padding:2.5rem 2.25rem; background:var(--bg); display:flex; flex-direction:column; gap:0.85rem; transition:background 0.3s; cursor:default; }
-    .terr-panel:first-child { border-right:1px solid var(--border); }
-    .terr-panel:hover { background:#fff; }
-    .terr-tag { font-family:var(--serif); font-size:0.6rem; letter-spacing:0.45em; text-transform:uppercase; color:var(--gold); }
-    .terr-name { font-family:var(--serif); font-size:1.5rem; font-weight:600; color:var(--ink); line-height:1.1; }
-    .terr-num { font-family:var(--serif); font-size:clamp(2rem,4vw,3rem); font-weight:700; color:var(--gold); line-height:1; letter-spacing:-0.04em; }
-    .terr-desc { font-size:0.75rem; color:var(--ink-4); line-height:1.7; max-width:340px; }
-    .terr-list { list-style:none; display:flex; flex-direction:column; gap:0.5rem; margin-top:0.25rem; }
-    .terr-list li { font-size:0.73rem; color:var(--ink-3); padding-left:1rem; position:relative; line-height:1.5; }
-    .terr-list li::before { content:'—'; position:absolute; left:0; color:var(--gold); font-size:0.68rem; }
-    .terr-list li strong { color:var(--ink-2); font-weight:500; }
+    /* ── Acquisition Options ── */
+    .acq-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 1.5rem; }
+    @media(max-width:780px){ .acq-grid{ grid-template-columns: 1fr; } }
 
-    /* ── Add-ons ── */
-    .addon-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:4px; overflow:hidden; margin-bottom:clamp(3rem,6vh,5rem); }
-    @media(max-width:540px){ .addon-grid{ grid-template-columns:1fr; } }
-    .addon-card { background:var(--bg); padding:1.75rem 2rem; display:flex; align-items:flex-start; gap:1.25rem; transition:background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease); cursor:default; }
-    .addon-card:hover { background:#fff; transform:translateY(-2px); box-shadow:var(--shadow-md); z-index:2; position:relative; }
-    .addon-num { font-family:var(--serif); font-size:1.75rem; font-weight:700; color:var(--gold-faint); line-height:1; flex-shrink:0; transition:color 0.3s; }
-    .addon-card:hover .addon-num { color:var(--gold); }
-    .addon-name { font-family:var(--serif); font-size:1.05rem; font-weight:600; color:var(--ink); line-height:1.15; margin-bottom:0.35rem; }
-    .addon-desc { font-size:0.74rem; color:var(--ink-4); line-height:1.65; }
+    /* ── Lease Calculator ── */
+    .lease-calc {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: 2rem 2.25rem; margin-bottom: clamp(3rem,6vh,5rem);
+    }
+    .lease-calc-title { font-family: var(--serif); font-size: 0.62rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 1.5rem; }
+    .lease-calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    @media(max-width:640px){ .lease-calc-row{ grid-template-columns:1fr; gap:1.5rem; } }
+    .lease-slider-wrap { display: flex; flex-direction: column; gap: 0.75rem; }
+    .lease-slider-label { display: flex; justify-content: space-between; align-items: baseline; }
+    .lease-slider-label-text { font-size: 0.78rem; color: var(--ink-3); }
+    .lease-slider-label-val { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--gold); letter-spacing: -0.03em; }
+    .lease-slider {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 4px;
+      background: var(--bg-3); border-radius: 2px; outline: none;
+    }
+    .lease-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 22px; height: 22px;
+      background: var(--gold); border-radius: 50%; cursor: pointer;
+      border: 3px solid var(--bg); box-shadow: var(--shadow-sm);
+    }
+    .lease-slider::-moz-range-thumb {
+      width: 22px; height: 22px; background: var(--gold); border-radius: 50%;
+      cursor: pointer; border: 3px solid var(--bg); box-shadow: var(--shadow-sm);
+    }
+    .lease-results { display: flex; flex-direction: column; gap: 0.65rem; }
+    .lease-result-item { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    .lease-result-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .lease-result-label { font-size: 0.74rem; color: var(--ink-4); }
+    .lease-result-val { font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; }
+    .lease-result-val.gold { color: var(--gold); }
+    .lease-note { font-size: 0.68rem; color: var(--ink-4); margin-top: 1rem; line-height: 1.6; }
+
+    .acq-card {
+      background: var(--bg); padding: 2rem 1.75rem; display: flex; flex-direction: column; gap: 0.65rem;
+      cursor: pointer; transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      position: relative;
+    }
+    .acq-card:hover { background: #fff; transform: translateY(-4px); box-shadow: var(--shadow-lg); z-index: 2; }
+    .acq-card.recommended { background: var(--ink); }
+    .acq-card.recommended:hover { background: #231f18; transform: translateY(-4px); box-shadow: 0 24px 64px rgba(26,22,18,0.25); }
+    .acq-card.recommended::before {
+      content: 'RECOMMENDED'; position: absolute; top: 1.25rem; right: 1.5rem;
+      font-family: var(--serif); font-size: 0.5rem; letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--gold-lt); opacity: 0.6;
+    }
+
+    .acq-type { font-family: var(--serif); font-size: 0.58rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 0.5rem; }
+    .acq-type::before { content: ''; width: 16px; height: 1px; background: var(--gold); }
+    .recommended .acq-type { color: rgba(212,176,122,0.8); }
+    .recommended .acq-type::before { background: rgba(212,176,122,0.5); }
+
+    .acq-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); line-height: 1.1; }
+    .recommended .acq-name { color: #f5f0e8; }
+
+    .acq-price { font-family: var(--serif); font-size: clamp(1.8rem,3vw,2.5rem); font-weight: 700; color: var(--gold); line-height: 1; letter-spacing: -0.04em; }
+    .recommended .acq-price { color: var(--gold-lt); }
+
+    .acq-price-sub { font-size: 0.69rem; color: var(--ink-4); line-height: 1.5; }
+    .recommended .acq-price-sub { color: rgba(245,240,232,0.35); }
+
+    .acq-desc { font-size: 0.74rem; color: var(--ink-3); line-height: 1.6; flex: 1; }
+    .recommended .acq-desc { color: rgba(245,240,232,0.5); }
+
+    .acq-divider { height: 1px; background: var(--border); }
+    .recommended .acq-divider { background: rgba(255,250,240,0.08); }
+
+    .acq-detail { font-size: 0.68rem; color: var(--ink-4); line-height: 1.6; }
+    .recommended .acq-detail { color: rgba(245,240,232,0.35); }
+
+    /* ── Reserve CTA ── */
+    .reserve-wrap {
+      background: var(--bg-2); border-top: 1px solid var(--border);
+      padding: clamp(4rem,8vh,7rem) clamp(1.25rem,4vw,4rem);
+      text-align: center;
+    }
+    .reserve-inner { max-width: 600px; margin: 0 auto; }
+    .reserve-title { font-family: var(--serif); font-size: clamp(2.5rem,5vw,4rem); font-weight: 600; line-height: 0.93; color: var(--ink); margin-bottom: 1.25rem; }
+    .reserve-title em { color: var(--gold); font-style: italic; }
+    .reserve-desc { font-size: 0.85rem; color: var(--ink-3); line-height: 1.75; margin-bottom: 2.5rem; }
+    .reserve-summary {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: 1.5rem 2rem; margin-bottom: 2rem; text-align: left;
+    }
+    .reserve-summary-title { font-family: var(--serif); font-size: 0.6rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 1rem; }
+    .reserve-summary-items { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .reserve-summary-items li { font-size: 0.74rem; color: var(--ink-3); display: flex; justify-content: space-between; align-items: center; }
+    .reserve-summary-items li span { color: var(--gold); font-family: var(--serif); font-weight: 600; }
+    .reserve-summary-total { border-top: 1px solid var(--border); margin-top: 1rem; padding-top: 1rem; display: flex; justify-content: space-between; align-items: baseline; }
+    .reserve-summary-total-label { font-family: var(--serif); font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+    .reserve-summary-total-val { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--gold); letter-spacing: -0.03em; }
+
+    .reserve-btn {
+      display: inline-block; padding: 1.1rem 3rem;
+      background: var(--gold); border: none; border-radius: 3px;
+      font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #fff; cursor: pointer; text-decoration: none;
+      transition: background 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+    }
+    .reserve-btn:hover { background: var(--gold-mid); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .reserve-sub { font-size: 0.7rem; color: var(--ink-4); margin-top: 1rem; }
 
     /* ── Footer ── */
     footer { border-top:1px solid var(--border); padding:1.75rem clamp(1.25rem,4vw,4rem); display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
@@ -318,341 +365,277 @@
 <nav>
   <div class="nav-brand">The <em>Machine</em></div>
   <ul class="nav-links">
-    <li><a href="#robots">Models</a></li>
-    <li><a href="#capabilities">Capabilities</a></li>
-    <li><a href="#roi">Returns</a></li>
-    <li><a href="#territory">Territory</a></li>
+    <li><a href="#configure">Configure</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#roi">Investment</a></li>
+    <li><a href="#reserve">Reserve</a></li>
   </ul>
 </nav>
+
+<!-- STICKY PRICE BAR -->
+<div class="price-bar" id="priceBar">
+  <div>
+    <div class="price-bar-label">Your Configuration</div>
+    <div class="price-bar-row">
+      <div class="price-bar-val" id="barUpfront">$100K<span>one-time</span></div>
+      <div class="price-bar-val" id="barMonthly">$5K<span>/ month</span></div>
+    </div>
+  </div>
+  <a href="#reserve" class="price-bar-cta">Reserve Deployment</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="page">
-    <span class="hero-eyebrow r">Deployment Catalog — 2026</span>
-    <h1 class="hero-title r d1">One robot.<br><em>Permanent edge.</em></h1>
-    <div class="hero-row">
-      <p class="hero-desc r d2">
-        An AI that sees, hears, speaks, moves, and remembers every guest.
-        Trained on your brand before it arrives. Gets smarter every month it runs.
-        Deployed at the Westin, the Marriott, proven at $50–70K engagements.
-        This catalog covers permanent installations — the ones that compound.
-      </p>
-      <div class="hero-stats r d3">
-        <div class="hs"><div class="hs-val">38×</div><div class="hs-lbl">Year-one return, Rutherford deployment</div></div>
-        <div class="hs"><div class="hs-val">200K+</div><div class="hs-lbl">Daily impressions at a Napa property</div></div>
-        <div class="hs"><div class="hs-val">$10.5M</div><div class="hs-lbl">Measurable value delivered, Year 1</div></div>
-        <div class="hs"><div class="hs-val">Day 1</div><div class="hs-lbl">Operational. No onboarding lag.</div></div>
+    <div class="hero-layout">
+      <div>
+        <span class="hero-eyebrow r">Configure Your Deployment</span>
+        <h1 class="hero-title r d1">The<br><em>Robot.</em></h1>
+        <p class="hero-desc r d2">
+          An AI that sees, hears, speaks, moves, and remembers every guest.
+          Trained on your brand before it arrives. Gets smarter every month it runs.
+          Day one operational. No onboarding lag.
+        </p>
+        <div class="hero-price r d3">
+          <div class="hero-price-main">$100K</div>
+          <div class="hero-price-sub">Starting price · one-time deployment + monthly retainer (scales with results)</div>
+        </div>
+        <div class="hero-stats r d4">
+          <div class="hs"><div class="hs-val">38×</div><div class="hs-lbl">Year-one ROI</div></div>
+          <div class="hs"><div class="hs-val">$10.5M</div><div class="hs-lbl">Year 1 value</div></div>
+          <div class="hs"><div class="hs-val">Day 1</div><div class="hs-lbl">Operational</div></div>
+        </div>
+      </div>
+      <div class="hero-visual r d2">
+        <svg width="220" height="320" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="28" y="8" width="44" height="36" rx="10" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+          <rect x="35" y="18" width="11" height="8" rx="3" fill="#1a1612" opacity="0.85"/>
+          <rect x="54" y="18" width="11" height="8" rx="3" fill="#1a1612" opacity="0.85"/>
+          <circle cx="39" cy="20" r="2" fill="#fff" opacity="0.5"/>
+          <circle cx="58" cy="20" r="2" fill="#fff" opacity="0.5"/>
+          <rect x="36" y="32" width="28" height="5" rx="2.5" fill="#9a7540" opacity="0.5"/>
+          <line x1="50" y1="8" x2="50" y2="0" stroke="#9a7540" stroke-width="1.5"/>
+          <circle cx="50" cy="0" r="3.5" fill="#9a7540"/>
+          <rect x="43" y="44" width="14" height="8" rx="3" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
+          <rect x="20" y="52" width="60" height="50" rx="10" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+          <rect x="30" y="60" width="40" height="30" rx="5" fill="#9a7540" opacity="0.12"/>
+          <circle cx="50" cy="70" r="7" fill="none" stroke="#9a7540" stroke-width="1.2" opacity="0.6"/>
+          <circle cx="50" cy="70" r="3" fill="#9a7540" opacity="0.5"/>
+          <line x1="30" y1="82" x2="70" y2="82" stroke="#9a7540" stroke-width="0.8" opacity="0.3"/>
+          <rect x="6" y="54" width="14" height="38" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+          <ellipse cx="13" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.6"/>
+          <rect x="80" y="54" width="14" height="38" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+          <ellipse cx="87" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.6"/>
+          <rect x="26" y="102" width="18" height="36" rx="8" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+          <rect x="22" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.6"/>
+          <rect x="56" y="102" width="18" height="36" rx="8" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
+          <rect x="52" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.6"/>
+        </svg>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ROBOTS / DEPLOYMENTS -->
-<section id="robots">
+<!-- CONFIGURATOR -->
+<section id="configure">
   <div class="page">
     <div class="sec-head">
-      <div>
-        <span class="sec-label r">The Models</span>
-        <h2 class="sec-title r d1">Choose your<br><em>robot.</em></h2>
-      </div>
-      <p class="sec-note r d2">All prices are one-time deployment + monthly retainer. Every model ships with full brand training, guest memory, and content engine.</p>
+      <span class="sec-label r">Configure</span>
+      <h2 class="sec-title r d1">Build your<br><em>deployment.</em></h2>
+      <p class="sec-subtitle r d2">Every robot ships with the base package. Add capabilities to match your operation. Prices update in real time.</p>
     </div>
-  </div>
 
-  <div class="page">
-    <div class="robots-grid">
+    <div class="config-group-label r">Included in base — $100K + $5K/mo starting retainer</div>
+    <div class="config-grid r d1" id="includedGrid">
 
-      <!-- DOG ROBOT -->
-      <div class="robot-card r">
-        <div class="robot-visual">
-          <!-- Dog Robot SVG -->
-          <svg class="robot-svg" width="140" height="120" viewBox="0 0 140 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Body -->
-            <rect x="35" y="38" width="70" height="38" rx="10" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <!-- Head -->
-            <rect x="80" y="22" width="38" height="28" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <!-- Ear / sensor on head -->
-            <rect x="92" y="14" width="6" height="10" rx="2" fill="#b48c50"/>
-            <circle cx="95" cy="13" r="3" fill="#9a7540"/>
-            <!-- Eye -->
-            <circle cx="106" cy="34" r="5" fill="#1a1612" opacity="0.85"/>
-            <circle cx="108" cy="32" r="1.5" fill="#fff" opacity="0.6"/>
-            <!-- Nose sensor -->
-            <circle cx="117" cy="38" r="3" fill="#9a7540" opacity="0.7"/>
-            <!-- Snout -->
-            <path d="M112 38 Q118 38 120 42" stroke="#9a7540" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-            <!-- Body detail lines -->
-            <line x1="35" y1="52" x2="105" y2="52" stroke="#9a7540" stroke-width="0.8" opacity="0.4"/>
-            <line x1="60" y1="38" x2="60" y2="76" stroke="#9a7540" stroke-width="0.8" opacity="0.3"/>
-            <!-- Tail -->
-            <path d="M35 52 Q18 45 14 36 Q12 28 20 26" stroke="#9a7540" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <!-- Legs — front left -->
-            <rect x="42" y="72" width="12" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <rect x="39" y="96" width="18" height="7" rx="3" fill="#b48c50" opacity="0.7"/>
-            <!-- Legs — front right -->
-            <rect x="58" y="72" width="12" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <rect x="55" y="96" width="18" height="7" rx="3" fill="#b48c50" opacity="0.7"/>
-            <!-- Legs — back left -->
-            <rect x="74" y="72" width="12" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <rect x="71" y="96" width="18" height="7" rx="3" fill="#b48c50" opacity="0.7"/>
-            <!-- Legs — back right -->
-            <rect x="90" y="72" width="12" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <rect x="87" y="96" width="18" height="7" rx="3" fill="#b48c50" opacity="0.7"/>
-            <!-- Antenna -->
-            <line x1="70" y1="38" x2="70" y2="26" stroke="#9a7540" stroke-width="1.2"/>
-            <circle cx="70" cy="24" r="3" fill="#9a7540"/>
-          </svg>
+      <div class="config-card included" data-feature="recognition">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Guest Recognition</div>
+          <div class="config-price-tag">Included</div>
         </div>
-        <div class="robot-body">
-          <span class="robot-badge">Entry · Outdoor</span>
-          <div class="robot-name">The Dog.<br>Scout model.</div>
-          <div class="robot-tagline">Patrols, greets, guides. Perfect for outdoor estates and vineyard tours.</div>
-          <div class="robot-price">$50K</div>
-          <div class="robot-price-sub">One-time · then $3K / month</div>
-          <div class="robot-divider"></div>
-          <ul class="robot-features">
-            <li>4-legged outdoor mobility — vineyard terrain ready</li>
-            <li>Greets arriving guests, guides to tasting rooms</li>
-            <li>Brand voice loaded pre-deployment</li>
-            <li>Camera system — captures UGC moments automatically</li>
-            <li>Monthly AI updates</li>
-          </ul>
-          <a href="mailto:eljordp@gmail.com?subject=Dog Robot Inquiry" class="robot-cta">Inquire</a>
-        </div>
+        <div class="config-tag attention">Generates Attention</div>
+        <div class="config-desc">Faces logged, preferences stored, last visit recalled. Greets returning guests by name before they say a word. Every interaction becomes personal.</div>
       </div>
 
-      <!-- SINGLE HUMANOID -->
-      <div class="robot-card r d1">
-        <div class="robot-visual">
-          <!-- Humanoid Robot SVG -->
-          <svg class="robot-svg" width="100" height="150" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Head -->
-            <rect x="28" y="8" width="44" height="36" rx="10" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <!-- Eyes -->
-            <rect x="35" y="18" width="11" height="8" rx="3" fill="#1a1612" opacity="0.85"/>
-            <rect x="54" y="18" width="11" height="8" rx="3" fill="#1a1612" opacity="0.85"/>
-            <circle cx="39" cy="20" r="2" fill="#fff" opacity="0.5"/>
-            <circle cx="58" cy="20" r="2" fill="#fff" opacity="0.5"/>
-            <!-- Mouth / speaker -->
-            <rect x="36" y="32" width="28" height="5" rx="2.5" fill="#9a7540" opacity="0.5"/>
-            <line x1="42" y1="34.5" x2="42" y2="34.5" stroke="#e8d9c0" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="50" y1="34.5" x2="50" y2="34.5" stroke="#e8d9c0" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="58" y1="34.5" x2="58" y2="34.5" stroke="#e8d9c0" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- Antenna -->
-            <line x1="50" y1="8" x2="50" y2="0" stroke="#9a7540" stroke-width="1.5"/>
-            <circle cx="50" cy="0" r="3.5" fill="#9a7540"/>
-            <!-- Neck -->
-            <rect x="43" y="44" width="14" height="8" rx="3" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
-            <!-- Torso -->
-            <rect x="20" y="52" width="60" height="50" rx="10" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <!-- Chest panel -->
-            <rect x="30" y="60" width="40" height="30" rx="5" fill="#9a7540" opacity="0.12"/>
-            <circle cx="50" cy="70" r="7" fill="none" stroke="#9a7540" stroke-width="1.2" opacity="0.6"/>
-            <circle cx="50" cy="70" r="3" fill="#9a7540" opacity="0.5"/>
-            <line x1="30" y1="82" x2="70" y2="82" stroke="#9a7540" stroke-width="0.8" opacity="0.3"/>
-            <!-- Left arm -->
-            <rect x="6" y="54" width="14" height="38" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <ellipse cx="13" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.6"/>
-            <!-- Right arm -->
-            <rect x="80" y="54" width="14" height="38" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <ellipse cx="87" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.6"/>
-            <!-- Left leg -->
-            <rect x="26" y="102" width="18" height="36" rx="8" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <rect x="22" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.6"/>
-            <!-- Right leg -->
-            <rect x="56" y="102" width="18" height="36" rx="8" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.5"/>
-            <rect x="52" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.6"/>
-          </svg>
+      <div class="config-card included" data-feature="brand">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Brand Voice Training</div>
+          <div class="config-price-tag">Included</div>
         </div>
-        <div class="robot-body">
-          <span class="robot-badge">Standard</span>
-          <div class="robot-name">The Standard.<br>Single robot.</div>
-          <div class="robot-tagline">Tasting room host. Sees, speaks, remembers. First robot in the valley.</div>
-          <div class="robot-price">$100K</div>
-          <div class="robot-price-sub">One-time · then $5K / month</div>
-          <div class="robot-divider"></div>
-          <ul class="robot-features">
-            <li>Full tasting room deployment — humanoid, mobile</li>
-            <li>Guest recognition and memory system</li>
-            <li>Brand training — wines, history, pricing, upsells</li>
-            <li>Content engine — clips, photos, UGC triggers</li>
-            <li>Private tasting upsell workflow</li>
-            <li>Monthly AI updates</li>
-          </ul>
-          <a href="mailto:eljordp@gmail.com?subject=Single Robot Inquiry" class="robot-cta">Inquire</a>
-        </div>
+        <div class="config-tag time">Saves Time</div>
+        <div class="config-desc">Your wines, your history, your family story, your pricing tiers — loaded before day one. Speaks your brand fluently from the first hello. Zero ramp time.</div>
       </div>
 
-      <!-- NAPA PREMIER (featured / dark) -->
-      <div class="robot-card featured r d2">
-        <div class="robot-visual">
-          <!-- Napa Premier robot — same humanoid but gold themed -->
-          <svg class="robot-svg" width="100" height="150" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Head -->
-            <rect x="28" y="8" width="44" height="36" rx="10" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
-            <!-- Eyes — glowing -->
-            <rect x="35" y="18" width="11" height="8" rx="3" fill="#b48c50" opacity="0.9"/>
-            <rect x="54" y="18" width="11" height="8" rx="3" fill="#b48c50" opacity="0.9"/>
-            <rect x="38" y="20" width="5" height="3" rx="1" fill="#ffd980" opacity="0.7"/>
-            <rect x="57" y="20" width="5" height="3" rx="1" fill="#ffd980" opacity="0.7"/>
-            <!-- Crown / sensor ring -->
-            <circle cx="50" cy="8" r="6" fill="none" stroke="#b48c50" stroke-width="1.5" opacity="0.5"/>
-            <line x1="50" y1="2" x2="50" y2="-4" stroke="#b48c50" stroke-width="1.5"/>
-            <circle cx="50" cy="-5" r="3.5" fill="#b48c50"/>
-            <!-- Mouth -->
-            <rect x="36" y="32" width="28" height="5" rx="2.5" fill="#b48c50" opacity="0.4"/>
-            <!-- Neck -->
-            <rect x="43" y="44" width="14" height="8" rx="3" fill="#2a2218" stroke="#b48c50" stroke-width="1.2"/>
-            <!-- Torso -->
-            <rect x="20" y="52" width="60" height="50" rx="10" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
-            <!-- Chest glow panel -->
-            <rect x="30" y="60" width="40" height="30" rx="5" fill="#b48c50" opacity="0.08"/>
-            <circle cx="50" cy="70" r="8" fill="none" stroke="#b48c50" stroke-width="1.5" opacity="0.7"/>
-            <circle cx="50" cy="70" r="3.5" fill="#b48c50" opacity="0.7"/>
-            <circle cx="50" cy="70" r="1.5" fill="#ffd980" opacity="0.6"/>
-            <line x1="30" y1="82" x2="70" y2="82" stroke="#b48c50" stroke-width="0.8" opacity="0.25"/>
-            <!-- Left arm -->
-            <rect x="6" y="54" width="14" height="38" rx="7" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
-            <ellipse cx="13" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.5"/>
-            <!-- Right arm -->
-            <rect x="80" y="54" width="14" height="38" rx="7" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
-            <ellipse cx="87" cy="95" rx="8" ry="5" fill="#b48c50" opacity="0.5"/>
-            <!-- Left leg -->
-            <rect x="26" y="102" width="18" height="36" rx="8" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
-            <rect x="22" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.5"/>
-            <!-- Right leg -->
-            <rect x="56" y="102" width="18" height="36" rx="8" fill="#2a2218" stroke="#b48c50" stroke-width="1.8"/>
-            <rect x="52" y="133" width="26" height="10" rx="4" fill="#b48c50" opacity="0.5"/>
-          </svg>
+      <div class="config-card included" data-feature="alwayson">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Always On</div>
+          <div class="config-price-tag">Included</div>
         </div>
-        <div class="robot-body">
-          <span class="robot-badge">Napa Valley · Recommended</span>
-          <div class="robot-name">The Premier.<br>Rutherford.</div>
-          <div class="robot-tagline">38× ROI. Most valuable territory. Most powerful deployment.</div>
-          <div class="robot-price">$175K</div>
-          <div class="robot-price-sub">One-time · then $8.5K / month</div>
-          <div class="robot-divider"></div>
-          <ul class="robot-features">
-            <li>Full Napa / Rutherford corridor deployment</li>
-            <li>Deep brand training — full estate knowledge</li>
-            <li>VIP recognition & preference tracking</li>
-            <li>Viral content engine — daily reels, UGC triggers</li>
-            <li>Private tasting upsell workflow built in</li>
-            <li>Monthly updates + quarterly strategy review</li>
-            <li>Priority on-site support & visits</li>
-          </ul>
-          <a href="mailto:eljordp@gmail.com?subject=Napa Premier Inquiry" class="robot-cta">Inquire</a>
-        </div>
+        <div class="config-tag time">Saves Time</div>
+        <div class="config-desc">No turnover. No training cycles. No sick days. Same quality host from the first guest to the five-hundredth. Replaces the most expensive line item on your payroll.</div>
       </div>
 
-      <!-- FLEET -->
-      <div class="robot-card r d3">
-        <div class="robot-visual">
-          <!-- Two robots side by side — fleet -->
-          <svg class="robot-svg" width="150" height="130" viewBox="0 0 150 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- ROBOT 1 (small, left) -->
-            <rect x="8" y="18" width="34" height="28" rx="7" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
-            <rect x="14" y="25" width="8" height="6" rx="2" fill="#1a1612" opacity="0.7"/>
-            <rect x="26" y="25" width="8" height="6" rx="2" fill="#1a1612" opacity="0.7"/>
-            <line x1="25" y1="18" x2="25" y2="11" stroke="#9a7540" stroke-width="1.2"/>
-            <circle cx="25" cy="9" r="2.5" fill="#9a7540"/>
-            <rect x="33" y="16" width="10" height="6" rx="2" fill="#9a7540" opacity="0.4"/>
-            <rect x="4" y="46" width="42" height="38" rx="8" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
-            <circle cx="25" cy="62" r="5" fill="none" stroke="#9a7540" stroke-width="1" opacity="0.5"/>
-            <rect x="8" y="56" width="9" height="24" rx="4" fill="#e8d9c0" stroke="#9a7540" stroke-width="1"/>
-            <rect x="33" y="56" width="9" height="24" rx="4" fill="#e8d9c0" stroke="#9a7540" stroke-width="1"/>
-            <rect x="10" y="84" width="11" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
-            <rect x="29" y="84" width="11" height="28" rx="5" fill="#e8d9c0" stroke="#9a7540" stroke-width="1.2"/>
-            <rect x="7" y="107" width="17" height="7" rx="3" fill="#b48c50" opacity="0.5"/>
-            <rect x="26" y="107" width="17" height="7" rx="3" fill="#b48c50" opacity="0.5"/>
-            <!-- ROBOT 2 (main, right, darker) -->
-            <rect x="88" y="10" width="44" height="34" rx="9" fill="#2a2218" stroke="#b48c50" stroke-width="1.5"/>
-            <rect x="96" y="19" width="10" height="7" rx="3" fill="#b48c50" opacity="0.8"/>
-            <rect x="114" y="19" width="10" height="7" rx="3" fill="#b48c50" opacity="0.8"/>
-            <line x1="110" y1="10" x2="110" y2="3" stroke="#b48c50" stroke-width="1.4"/>
-            <circle cx="110" cy="1" r="3" fill="#b48c50"/>
-            <rect x="82" y="44" width="56" height="46" rx="9" fill="#2a2218" stroke="#b48c50" stroke-width="1.5"/>
-            <circle cx="110" cy="64" r="7" fill="none" stroke="#b48c50" stroke-width="1.2" opacity="0.6"/>
-            <circle cx="110" cy="64" r="3" fill="#b48c50" opacity="0.6"/>
-            <rect x="73" y="47" width="9" height="34" rx="4" fill="#2a2218" stroke="#b48c50" stroke-width="1.2"/>
-            <rect x="138" y="47" width="9" height="34" rx="4" fill="#2a2218" stroke="#b48c50" stroke-width="1.2"/>
-            <rect x="88" y="90" width="15" height="32" rx="6" fill="#2a2218" stroke="#b48c50" stroke-width="1.5"/>
-            <rect x="117" y="90" width="15" height="32" rx="6" fill="#2a2218" stroke="#b48c50" stroke-width="1.5"/>
-            <rect x="85" y="117" width="21" height="8" rx="3" fill="#b48c50" opacity="0.5"/>
-            <rect x="114" y="117" width="21" height="8" rx="3" fill="#b48c50" opacity="0.5"/>
-            <!-- Connection line between robots -->
-            <path d="M50 68 Q69 62 82 68" stroke="#9a7540" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
-          </svg>
+      <div class="config-card included" data-feature="updates">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Monthly AI Updates</div>
+          <div class="config-price-tag">Included</div>
         </div>
-        <div class="robot-body">
-          <span class="robot-badge">Multi-Location</span>
-          <div class="robot-name">The Fleet.<br>Two robots.</div>
-          <div class="robot-tagline">Two properties. One unified guest intelligence layer.</div>
-          <div class="robot-price">$220K</div>
-          <div class="robot-price-sub">Suisun 2-robot · then $11K / month</div>
-          <div class="robot-divider"></div>
-          <ul class="robot-features">
-            <li>Two robots across two locations or rooms</li>
-            <li>Unified guest profiles — follows visitor everywhere</li>
-            <li>Cross-location upsell workflows</li>
-            <li>Shared content calendar and brand voice</li>
-            <li>Fleet management dashboard</li>
-            <li>Coordinated viral moments across both properties</li>
-          </ul>
-          <a href="mailto:eljordp@gmail.com?subject=Fleet Inquiry" class="robot-cta">Inquire</a>
-        </div>
+        <div class="config-tag revenue">Generates Revenue</div>
+        <div class="config-desc">A meaningful upgrade every month. New capabilities, refined responses, improved timing. Month 12 is not month 1. The person you hired stays the same — this doesn't.</div>
       </div>
 
     </div>
+
+    <div class="config-group-label r d2">Premium add-ons — select to add</div>
+    <div class="config-grid r d3" id="addonsGrid">
+
+      <div class="config-card" data-feature="content" data-monthly="1000">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Content Engine</div>
+          <div class="config-price-tag">+$1K/mo</div>
+        </div>
+        <div class="config-tag attention">Generates Attention</div>
+        <div class="config-desc">Captures photos and clips automatically. Reels, posts, and guest moments generated while the robot works the room. Your social calendar fills itself. 150+ posts worth of content per day.</div>
+      </div>
+
+      <div class="config-card" data-feature="upsell" data-monthly="1000">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Upsell Intelligence</div>
+          <div class="config-price-tag">+$1K/mo</div>
+        </div>
+        <div class="config-tag revenue">Generates Revenue</div>
+        <div class="config-desc">Reads hesitation, gauges interest, times the pitch. Routes high-intent guests toward premium pours and private tastings automatically. +15% purchase lift across every visitor.</div>
+      </div>
+
+      <div class="config-card" data-feature="vip" data-monthly="500">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">VIP Recognition</div>
+          <div class="config-price-tag">+$500/mo</div>
+        </div>
+        <div class="config-tag revenue">Generates Revenue</div>
+        <div class="config-desc">High-value guest flagging and preference tracking. Knows your top spenders, wine club members, and VIPs on sight. Treats your best customers the way they expect — before they ask.</div>
+      </div>
+
+      <div class="config-card" data-feature="tasting" data-monthly="500">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Private Tasting Workflow</div>
+          <div class="config-price-tag">+$500/mo</div>
+        </div>
+        <div class="config-tag revenue">Generates Revenue</div>
+        <div class="config-desc">Identifies high-intent guests and routes them to premium experiences. Automates booking, upsell sequencing, and follow-up. 5+ extra premium bookings per day at $150 each.</div>
+      </div>
+
+      <div class="config-card" data-feature="dashboard" data-monthly="500">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Guest Intelligence Dashboard</div>
+          <div class="config-price-tag">+$500/mo</div>
+        </div>
+        <div class="config-tag time">Saves Time</div>
+        <div class="config-desc">Real-time view of visitor behavior — what they asked, what they hesitated on, what they bought, who came back. Data your team actually uses to make decisions, not just reports that sit in a folder.</div>
+      </div>
+
+      <div class="config-card" data-feature="strategy" data-monthly="500">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Quarterly Strategy Reviews</div>
+          <div class="config-price-tag">+$500/mo</div>
+        </div>
+        <div class="config-tag time">Saves Time</div>
+        <div class="config-desc">Quarterly on-site session reviewing robot performance, guest data trends, and optimization opportunities. We adjust the robot's behavior based on what's actually working at your property.</div>
+      </div>
+
+      <div class="config-card" data-feature="support" data-monthly="500">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Priority On-Site Support</div>
+          <div class="config-price-tag">+$500/mo</div>
+        </div>
+        <div class="config-tag time">Saves Time</div>
+        <div class="config-desc">Dedicated support with priority on-site visits. Any issue, any adjustment — someone is there. Peace of mind that the robot runs at peak performance every single day.</div>
+      </div>
+
+      <div class="config-card" data-feature="data" data-monthly="1500">
+        <div class="config-card-head">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Deep Data Collection</div>
+          <div class="config-price-tag">+$1.5K/mo</div>
+        </div>
+        <div class="config-tag revenue">Generates Revenue</div>
+        <div class="config-desc">Full behavioral analytics, foot traffic patterns, dwell time mapping, sentiment analysis, and purchase correlation data. The intelligence layer that turns your tasting room into a data-driven operation.</div>
+      </div>
+
+    </div>
+
+    <div class="config-group-label r d4">Scale your deployment</div>
+    <div class="config-grid-full r d5">
+      <div class="config-card second-robot" data-feature="second" data-upfront="75000" data-monthly="5000">
+        <div class="config-card-head" style="flex:1;">
+          <div class="config-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="config-name">Add Second Robot</div>
+          <div class="config-price-tag">+$75K one-time · +$5K/mo</div>
+        </div>
+        <div class="config-tag scale" style="margin-left:2.2rem;">Scales Everything</div>
+        <div class="config-desc" style="margin-left:2.2rem;">Two robots. Two locations or rooms. One unified guest intelligence layer. Shared profiles, cross-location upsell workflows, coordinated content calendar, fleet management dashboard. Every add-on above applies to both.</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- CAPABILITIES -->
-<section id="capabilities">
+<!-- ROADMAP -->
+<section id="roadmap">
   <div class="page">
     <div class="sec-head">
-      <div>
-        <span class="sec-label r">Capabilities</span>
-        <h2 class="sec-title r d1">What the<br><em>robot does.</em></h2>
-      </div>
-      <p class="sec-note r d2">Every capability ships standard. There is no basic version.</p>
+      <span class="sec-label r">Deployment Timeline</span>
+      <h2 class="sec-title r d1">Your first<br><em>twelve months.</em></h2>
+      <p class="sec-subtitle r d2">The robot compounds. Every month it runs, the data gets deeper, the content gets better, and the revenue lift grows.</p>
     </div>
-    <div class="feat-grid">
-      <div class="feat-card r">
-        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-        <div class="feat-name">Guest Recognition</div>
-        <div class="feat-desc">Faces logged, preferences stored, last visit recalled. Greets returning guests by name before they say a word.</div>
-        <div class="feat-tag">Memory system</div>
+
+    <div class="roadmap-grid">
+      <div class="roadmap-card r">
+        <div class="roadmap-month">Month 1–3</div>
+        <div class="roadmap-title">Launch &<br>Calibrate</div>
+        <ul class="roadmap-list">
+          <li>Robot arrives, brand training complete</li>
+          <li>First guests greeted, baseline data flowing</li>
+          <li>Content engine producing daily clips and photos</li>
+          <li>Staff sees immediate foot traffic reaction</li>
+          <li>Guest recognition database starts building</li>
+          <li>Initial viral moments — first social media hits</li>
+        </ul>
       </div>
-      <div class="feat-card r d1">
-        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <div class="feat-name">Brand Voice</div>
-        <div class="feat-desc">Your history, your wines, your family story, your pricing tiers — loaded in before day one. Speaks your brand fluently from the first hello.</div>
-        <div class="feat-tag">Training system</div>
+      <div class="roadmap-card r d1">
+        <div class="roadmap-month">Month 4–6</div>
+        <div class="roadmap-title">Compound &<br>Optimize</div>
+        <ul class="roadmap-list">
+          <li>Recognition database meaningful — returning guests greeted by name</li>
+          <li>Upsell patterns refined from real behavior data</li>
+          <li>Content calendar running on autopilot</li>
+          <li>Measurable lift in daily visitors and per-visit spend</li>
+          <li>VIP tracking identifies your highest-value guests</li>
+          <li>First quarterly strategy review adjusts for peak performance</li>
+        </ul>
       </div>
-      <div class="feat-card r d2">
-        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
-        <div class="feat-name">Content Engine</div>
-        <div class="feat-desc">Captures photos and clips automatically. Reels, posts, and guest moments generated while the robot works the room.</div>
-        <div class="feat-tag">Media production</div>
-      </div>
-      <div class="feat-card r d3">
-        <div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <div class="feat-name">Upsell Intelligence</div>
-        <div class="feat-desc">Reads hesitation, gauges interest, times the pitch. Routes high-intent guests toward private tastings and premium pours automatically.</div>
-        <div class="feat-tag">Revenue conversion</div>
-      </div>
-      <div class="feat-card r d4">
-        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-        <div class="feat-name">Always On</div>
-        <div class="feat-desc">No turnover. No training cycles. No sick days. Same quality host from the first guest to the five-hundredth.</div>
-        <div class="feat-tag">Operational stability</div>
-      </div>
-      <div class="feat-card r d5">
-        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-        <div class="feat-name">Monthly Compounding</div>
-        <div class="feat-desc">AI model updates every month. Month 12 is meaningfully smarter than month 1. The person you hired stays the same. This one doesn't.</div>
-        <div class="feat-tag">Long-term advantage</div>
+      <div class="roadmap-card r d2">
+        <div class="roadmap-month">Month 7–12</div>
+        <div class="roadmap-title">Full<br>Compound Effect</div>
+        <ul class="roadmap-list">
+          <li>AI meaningfully smarter than month 1 — refined by your data</li>
+          <li>Deep guest profiles drive personalized experiences</li>
+          <li>Viral content engine producing destination-level traffic</li>
+          <li>Purchase lift measurable across every metric</li>
+          <li>Data moat established — competitor can't replicate your 12 months of learning</li>
+          <li>ROI fully realized — the math speaks for itself</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -662,16 +645,16 @@
 <section id="roi">
   <div class="roi-wrap">
     <div class="roi-inner">
-      <span class="roi-label r">The math on Rutherford</span>
-      <h2 class="roi-title r d1">$277K in.<br><em>$10.5M out.</em></h2>
+      <span class="roi-label r">The math on your deployment</span>
+      <h2 class="roi-title r d1"><span id="roiCost">$160K</span> in.<br><em>$10.5M out.</em></h2>
       <div class="roi-grid">
         <div class="roi-card r d1">
-          <span class="roi-card-lbl">Year 1 cost</span>
-          <div class="roi-num muted">$277K</div>
-          <p class="roi-desc">$175K deployment + $102K retainer (12 months at $8.5K). Scales quarterly as features expand and value compounds.</p>
+          <span class="roi-card-lbl">Your Year 1 Investment</span>
+          <div class="roi-num muted" id="roiInvestment">$160K</div>
+          <p class="roi-desc" id="roiInvestmentDesc">$100K deployment + $60K retainer (12 months at $5K). Add-ons scale this number — but the return scales faster.</p>
         </div>
         <div class="roi-card r d2">
-          <span class="roi-card-lbl">Year 1 value delivered</span>
+          <span class="roi-card-lbl">Projected Year 1 Value</span>
           <div class="roi-num">$10.5M+</div>
           <p class="roi-desc">Measurable. Excludes compounding viral effects, corridor halo, and the behavioral data moat that grows every month it runs.</p>
         </div>
@@ -686,93 +669,275 @@
   </div>
 </section>
 
-<!-- TERRITORY -->
-<section id="territory">
+<!-- ACQUISITION OPTIONS -->
+<section id="acquire">
   <div class="page">
     <div class="sec-head">
-      <div>
-        <span class="sec-label r">Territory</span>
-        <h2 class="sec-title r d1">Two valleys.<br><em>First mover wins.</em></h2>
-      </div>
-      <p class="sec-note r d2">Once one property deploys, every winery in the corridor hears about it within a week. The data moat closes.</p>
-    </div>
-    <div class="terr-grid r">
-      <div class="terr-panel">
-        <span class="terr-tag">Suisun Valley</span>
-        <div class="terr-name">Caymus-Suisun<br>& the Valley Circuit</div>
-        <div class="terr-num">$110M–$220M</div>
-        <p class="terr-desc">Annual network revenue. Wagner Family anchor. My father works the property. The Wagners know our family.</p>
-        <ul class="terr-list">
-          <li><strong>Caymus-Suisun</strong> — Wagner Family anchor, $11–15M tasting room</li>
-          <li><strong>Vezér Family Vineyard</strong> — 3 locations, weddings, wine club</li>
-          <li><strong>Wooden Valley Winery</strong> — 90 years, Lanza family institution</li>
-          <li><strong>Randy Bains / Ryan German</strong> — personal network, opens doors</li>
-        </ul>
-      </div>
-      <div class="terr-panel">
-        <span class="terr-tag">Napa Valley — Rutherford</span>
-        <div class="terr-name">Caymus Rutherford<br>& the Corridor</div>
-        <div class="terr-num">$304M–$430M+</div>
-        <p class="terr-desc">Rutherford sits at the center — Mondavi, Opus One, Coppola. Close Caymus and the next call is the same family, higher traffic, same relationship.</p>
-        <ul class="terr-list">
-          <li><strong>Caymus Rutherford</strong> — $15–25M tasting room, 250+ daily visitors</li>
-          <li><strong>Robert Mondavi Winery</strong> — $66–75M, reopening Spring 2026</li>
-          <li><strong>Opus One</strong> — $400+ / bottle, UHNWI visitor profile</li>
-          <li><strong>Inglenook / Coppola</strong> — $30M+ est., national celebrity draw</li>
-        </ul>
-      </div>
+      <span class="sec-label r">Acquisition</span>
+      <h2 class="sec-title r d1">How you<br><em>deploy.</em></h2>
+      <p class="sec-subtitle r d2">Three ways to get the robot on your floor. Choose what fits your operation. Monthly software retainer applies to all options and scales as value proves out.</p>
     </div>
 
-    <div class="sec-head" style="margin-top:1rem;">
-      <div>
-        <span class="sec-label r">Included in every deployment</span>
-        <h2 class="sec-title r d1">What ships<br><em>with the robot.</em></h2>
+    <div class="acq-grid">
+
+      <div class="acq-card recommended r">
+        <div class="acq-type">Own It</div>
+        <div class="acq-name">Buy</div>
+        <div class="acq-price" id="acqBuyPrice">$100K+</div>
+        <div class="acq-price-sub">One-time · you own it outright</div>
+        <div class="acq-divider"></div>
+        <div class="acq-desc">Full purchase. Lowest long-term cost. The robot is yours — deploy it, move it, run it forever. Monthly retainer covers software, updates, and support.</div>
+        <div class="acq-detail">Best for: Properties committed to permanent deployment</div>
       </div>
+
+      <div class="acq-card r d1">
+        <div class="acq-type">Finance It</div>
+        <div class="acq-name">Lease</div>
+        <div class="acq-price">From $8K</div>
+        <div class="acq-price-sub">Per month · 12-month term · down payment required</div>
+        <div class="acq-divider"></div>
+        <div class="acq-desc">Down payment + monthly. Lower down payment means higher monthly — just like a car. Buyout credit applied if you convert to full ownership at end of term.</div>
+        <div class="acq-detail">Best for: Properties that want to prove ROI before full commitment</div>
+      </div>
+
+      <div class="acq-card r d2">
+        <div class="acq-type">Path to Ownership</div>
+        <div class="acq-name">Rent-to-Own</div>
+        <div class="acq-price">$8.5K</div>
+        <div class="acq-price-sub">Per month · own at month 18 · no down payment</div>
+        <div class="acq-divider"></div>
+        <div class="acq-desc">Every payment goes toward ownership. Zero down. Full capabilities from day one. At month 18, the robot is yours — no balloon payment, no buyout fee.</div>
+        <div class="acq-detail">Best for: Properties that want to spread cost while building toward ownership</div>
+      </div>
+
     </div>
-    <div class="addon-grid">
-      <div class="addon-card r">
-        <div class="addon-num">01</div>
-        <div>
-          <div class="addon-name">Brand Training Session</div>
-          <div class="addon-desc">Pre-deployment deep dive — wines, history, pricing, upsell sequences, family story. The robot knows your operation before it ever says hello.</div>
+
+    <!-- Lease Calculator -->
+    <div class="lease-calc r" id="leaseCalc">
+      <div class="lease-calc-title">Lease Payment Calculator</div>
+      <div class="lease-calc-row">
+        <div class="lease-slider-wrap">
+          <div class="lease-slider-label">
+            <span class="lease-slider-label-text">Down Payment</span>
+            <span class="lease-slider-label-val" id="leaseDownDisplay">$50K</span>
+          </div>
+          <input type="range" class="lease-slider" id="leaseSlider" min="10000" max="80000" step="5000" value="50000" />
+          <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:var(--ink-4);margin-top:0.15rem;">
+            <span>$10K</span>
+            <span>$80K</span>
+          </div>
+        </div>
+        <div class="lease-results">
+          <div class="lease-result-item">
+            <span class="lease-result-label">Down Payment</span>
+            <span class="lease-result-val" id="leaseDown">$50,000</span>
+          </div>
+          <div class="lease-result-item">
+            <span class="lease-result-label">Monthly Payment</span>
+            <span class="lease-result-val gold" id="leaseMonthly">$4,583</span>
+          </div>
+          <div class="lease-result-item">
+            <span class="lease-result-label">12-Month Total</span>
+            <span class="lease-result-val" id="leaseTotal">$105,000</span>
+          </div>
+          <div class="lease-result-item">
+            <span class="lease-result-label">Effective Rate</span>
+            <span class="lease-result-val" id="leaseRate">5%</span>
+          </div>
         </div>
       </div>
-      <div class="addon-card r d1">
-        <div class="addon-num">02</div>
-        <div>
-          <div class="addon-name">Guest Intelligence Dashboard</div>
-          <div class="addon-desc">Real-time view of visitor behavior — what they asked, what they hesitated at, what they bought, who came back. Data your team actually uses.</div>
+      <div class="lease-note">Lower down payment = higher effective rate. Software retainer billed separately. Buyout credit applies if converting to ownership.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVE -->
+<section id="reserve">
+  <div class="reserve-wrap">
+    <div class="reserve-inner">
+      <span class="sec-label r">Next Step</span>
+      <h2 class="reserve-title r d1">Reserve your<br><em>deployment.</em></h2>
+      <p class="reserve-desc r d2">Your configuration is ready. We'll schedule a brand training session, confirm your deployment date, and have the robot operational on day one.</p>
+
+      <div class="reserve-summary r d3" id="reserveSummary">
+        <div class="reserve-summary-title">Your Configuration</div>
+        <ul class="reserve-summary-items" id="summaryItems">
+          <li>Base Robot Deployment <span>$100K</span></li>
+          <li>Q1 Retainer (3 months × $5K) <span>$15K</span></li>
+          <li>Q2 Retainer (3 months × $10K) <span>$30K</span></li>
+          <li>Q3–Q4 Retainer (6 months × $15K) <span>$90K</span></li>
+        </ul>
+        <div class="reserve-summary-total">
+          <div class="reserve-summary-total-label">Year 1 Total</div>
+          <div class="reserve-summary-total-val" id="summaryTotal">$160K</div>
         </div>
       </div>
-      <div class="addon-card r d2">
-        <div class="addon-num">03</div>
-        <div>
-          <div class="addon-name">Content Calendar Output</div>
-          <div class="addon-desc">The robot generates content while it works. Clips, photos, guest moments — formatted and ready for your social team to post immediately.</div>
-        </div>
-      </div>
-      <div class="addon-card r d3">
-        <div class="addon-num">04</div>
-        <div>
-          <div class="addon-name">Monthly Model Updates</div>
-          <div class="addon-desc">A meaningful AI upgrade every month. New capabilities, refined responses, improved upsell timing. Month 12 is not month 1.</div>
-        </div>
-      </div>
+
+      <a href="mailto:eljordp@gmail.com?subject=Robot Deployment Reservation" class="reserve-btn r d4">Reserve Your Deployment</a>
+      <div class="reserve-sub r d5">Day 1 operational. No onboarding lag. Brand training included.</div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p class="footer-note"><strong>JP — Napa & Suisun Valley territory.</strong> This catalog is confidential. Pricing and availability subject to agreement.</p>
-  <span class="footer-lbl">The Machine · 2026 · Confidential</span>
+  <p class="footer-note"><strong>Confidential.</strong> Pricing and availability subject to agreement. All projections based on comparable deployments.</p>
+  <span class="footer-lbl">The Machine · 2026</span>
 </footer>
 
 <script>
+  // ── Scroll reveal ──
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
   document.querySelectorAll('.r').forEach(el => obs.observe(el));
+
+  // ── Sticky price bar ──
+  const priceBar = document.getElementById('priceBar');
+  const configSection = document.getElementById('configure');
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.boundingClientRect.top < 0) {
+        priceBar.classList.add('visible');
+      } else {
+        priceBar.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0, rootMargin: '-120px 0px 0px 0px' });
+  barObserver.observe(configSection);
+
+  // ── Configurator state ──
+  const BASE_UPFRONT = 100000;
+  // Quarterly retainer escalation: Q1=$5K, Q2=$10K, Q3+=$15K/mo
+  const RETAINER_Q1 = 5000;   // months 1-3
+  const RETAINER_Q2 = 10000;  // months 4-6
+  const RETAINER_Q3 = 15000;  // months 7-12
+  const selected = new Set();
+
+  const addons = {
+    content:   { monthly: 1000, upfront: 0, label: 'Content Engine', monthlyLabel: '+$1K/mo' },
+    upsell:    { monthly: 1000, upfront: 0, label: 'Upsell Intelligence', monthlyLabel: '+$1K/mo' },
+    vip:       { monthly: 500,  upfront: 0, label: 'VIP Recognition', monthlyLabel: '+$500/mo' },
+    tasting:   { monthly: 500,  upfront: 0, label: 'Private Tasting Workflow', monthlyLabel: '+$500/mo' },
+    dashboard: { monthly: 500,  upfront: 0, label: 'Guest Intelligence Dashboard', monthlyLabel: '+$500/mo' },
+    strategy:  { monthly: 500,  upfront: 0, label: 'Quarterly Strategy Reviews', monthlyLabel: '+$500/mo' },
+    support:   { monthly: 500,  upfront: 0, label: 'Priority On-Site Support', monthlyLabel: '+$500/mo' },
+    data:      { monthly: 1500, upfront: 0, label: 'Deep Data Collection', monthlyLabel: '+$1.5K/mo' },
+    second:    { monthly: 5000, upfront: 75000, label: 'Second Robot', monthlyLabel: '+$5K/mo' },
+  };
+
+  function formatK(n) {
+    if (n >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+    if (n >= 1000) return '$' + Math.round(n / 1000) + 'K';
+    return '$' + n;
+  }
+
+  function formatNum(n) {
+    return '$' + n.toLocaleString('en-US');
+  }
+
+  function calcYear1(upfront, addonMonthly) {
+    // Q1: 3 months × (base retainer + addon)
+    // Q2: 3 months × (escalated retainer + addon)
+    // Q3-Q4: 6 months × (full retainer + addon)
+    const q1 = 3 * (RETAINER_Q1 + addonMonthly);
+    const q2 = 3 * (RETAINER_Q2 + addonMonthly);
+    const q34 = 6 * (RETAINER_Q3 + addonMonthly);
+    return upfront + q1 + q2 + q34;
+  }
+
+  function updatePrices() {
+    let upfront = BASE_UPFRONT;
+    let addonMonthly = 0;
+
+    selected.forEach(key => {
+      if (addons[key]) {
+        upfront += addons[key].upfront;
+        addonMonthly += addons[key].monthly;
+      }
+    });
+
+    const startingMonthly = RETAINER_Q1 + addonMonthly;
+    const year1 = calcYear1(upfront, addonMonthly);
+
+    // Sticky bar
+    document.getElementById('barUpfront').innerHTML = formatK(upfront) + '<span>one-time</span>';
+    document.getElementById('barMonthly').innerHTML = formatK(startingMonthly) + '<span>/ mo starting</span>';
+
+    // ROI section
+    document.getElementById('roiCost').textContent = formatK(year1);
+    document.getElementById('roiInvestment').textContent = formatK(year1);
+
+    const q1Total = 3 * (RETAINER_Q1 + addonMonthly);
+    const q2Total = 3 * (RETAINER_Q2 + addonMonthly);
+    const q34Total = 6 * (RETAINER_Q3 + addonMonthly);
+    document.getElementById('roiInvestmentDesc').textContent =
+      formatK(upfront) + ' deployment + ' + formatK(q1Total + q2Total + q34Total) + ' retainer over 12 months. Retainer scales quarterly as value proves out: ' + formatK(RETAINER_Q1 + addonMonthly) + ' → ' + formatK(RETAINER_Q2 + addonMonthly) + ' → ' + formatK(RETAINER_Q3 + addonMonthly) + '/mo.';
+
+    // Buy price
+    document.getElementById('acqBuyPrice').textContent = formatK(upfront) + '+';
+
+    // Reserve summary
+    const items = document.getElementById('summaryItems');
+    let html = '<li>Base Robot Deployment <span>' + formatK(upfront) + '</span></li>';
+    html += '<li>Q1 Retainer (3 mo × ' + formatK(RETAINER_Q1 + addonMonthly) + ') <span>' + formatK(q1Total) + '</span></li>';
+    html += '<li>Q2 Retainer (3 mo × ' + formatK(RETAINER_Q2 + addonMonthly) + ') <span>' + formatK(q2Total) + '</span></li>';
+    html += '<li>Q3–Q4 Retainer (6 mo × ' + formatK(RETAINER_Q3 + addonMonthly) + ') <span>' + formatK(q34Total) + '</span></li>';
+
+    selected.forEach(key => {
+      if (addons[key] && addons[key].upfront > 0) {
+        html += '<li>' + addons[key].label + ' <span>' + formatK(addons[key].upfront) + '</span></li>';
+      }
+    });
+
+    items.innerHTML = html;
+    document.getElementById('summaryTotal').textContent = formatK(year1);
+
+    // Update lease calculator
+    updateLease();
+  }
+
+  // ── Lease calculator ──
+  const leaseSlider = document.getElementById('leaseSlider');
+  const ROBOT_COST = 100000;
+
+  function updateLease() {
+    const down = parseInt(leaseSlider.value);
+    const financed = ROBOT_COST - down;
+    // APR scales inversely with down payment: more financed = higher rate
+    // $80K down (finance $20K) = 5% | $10K down (finance $90K) = 24%
+    const financeRatio = financed / ROBOT_COST;
+    const rate = 0.05 + (financeRatio * 0.22); // 5% to 27%
+    const totalFinanced = financed * (1 + rate);
+    const monthly = Math.round(totalFinanced / 12);
+    const totalPaid = down + (monthly * 12);
+
+    document.getElementById('leaseDownDisplay').textContent = formatK(down);
+    document.getElementById('leaseDown').textContent = formatNum(down);
+    document.getElementById('leaseMonthly').textContent = formatNum(monthly);
+    document.getElementById('leaseTotal').textContent = formatNum(totalPaid);
+    document.getElementById('leaseRate').textContent = Math.round(rate * 100) + '%';
+  }
+
+  leaseSlider.addEventListener('input', updateLease);
+
+  // ── Card click handlers ──
+  document.querySelectorAll('#addonsGrid .config-card, .config-card.second-robot').forEach(card => {
+    card.addEventListener('click', () => {
+      const feature = card.dataset.feature;
+      if (selected.has(feature)) {
+        selected.delete(feature);
+        card.classList.remove('selected');
+      } else {
+        selected.add(feature);
+        card.classList.add('selected');
+      }
+      updatePrices();
+    });
+  });
+
+  // Initialize
+  updatePrices();
 </script>
 </body>
 </html>
